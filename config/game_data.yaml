@@ -1,0 +1,60 @@
+AmbushChampHighScoreData:
+- {date: 'Sat Jan 02 21:02:14 2016', inits: MAC, score: 8}
+Audits: {Avg Ball Time: '0:24', Avg Extra Balls: 0, Avg Game Time: '3:01', Avg Score: 6720859,
+  Balls Played: 181, Extra Balls Earned: 21, Games Played: 50, Games Started: 63,
+  Left Drains: 41, Left Flipper: 2654, Right Drains: 58, Right Flipper: 2924, Tilts: 0}
+BountyHunterHighScoreData:
+- {date: 'Sun Jan 03 00:12:29 2016', inits: MAC, score: 4}
+ClassicHighScoreData:
+- {date: 'Sun Jan 03 00:12:29 2016', inits: MAC, score: 44576020}
+- {date: 'Sat Jan 02 21:02:14 2016', inits: MAC, score: 28251190}
+- {date: 'Sat Jan 02 20:00:56 2016', inits: MAC, score: 16653750}
+- {date: 'Mon Jan 04 16:26:57 2016', inits: MAC, score: 16429570}
+- {date: 'Fri Jan 01 03:44:03 2016', inits: MAC, score: 16165640}
+ComboChampHighScoreData:
+- {date: 'Fri Jan 01 03:44:03 2016', inits: MAC, score: 4}
+Feature: {Ambush Kills: 16, Ambush Started: 4, Ball Saves: 37, Ball Searches: 1, Bart Bros Complete: 3,
+  Bart Hits: 102, Barts Defeated: 42, Bionic Bart Hits: 0, Bionic Bart Kills: 0, Bionic Bart Started: 0,
+  Bounty Awards: 45, CVA Aliens Hit: 0, CVA Ships Hit: 11, CVA Started: 7, Center Polly Started: 36,
+  Center Polly Won: 3, Center Ramp Hits: 383, Combos Complete: 10, Deputy At End: 6,
+  Drunk MB Beers: 1, Drunk MB Jackpots: 0, Drunk MB Started: 3, EB Lit Bounty: 6,
+  EB Lit Quickdraws: 3, EB Lit Skillshot: 6, Gold Mine Jackpots: 25, Gold Mine Started: 13,
+  Gunfights Started: 41, Gunfights Won: 23, High Noon Started: 0, High Noon Won: 0,
+  Last Call Started: 13, Left Loop Hits: 47, Left Polly Started: 9, Left Polly Won: 4,
+  Left Quickdraw Lit: 0, Left Ramp Hits: 79, Marshall At End: 0, Marshall MB Started: 0,
+  Motherlode Hits: 3, Motherlodes Lit: 12, Partner At End: 15, Quickdraws Started: 69,
+  Quickdraws Won: 60, Right Loop Hits: 93, Right Polly Started: 7, Right Polly Won: 2,
+  Right Quickdraw Lit: 5, Right Ramp Hits: 89, Sheriff At End: 4, Showdown Racks Clear: 0,
+  Showdown Started: 0, Stampede Jackpots: 4, Stampede Started: 2, Stranger At End: 13}
+LastCallHighScoreData:
+- {date: 'Mon Jan 04 16:26:57 2016', inits: MAC, score: 2068310}
+MarshallHighScoreData:
+- {date: 'Sun Oct  3 17:38:46 2010', inits: OIC, score: 500}
+- {date: 'Sun Oct  3 17:44:49 2010', inits: LIZ, score: 400}
+- {date: 'Sun Oct  3 16:22:47 2010', inits: ABI, score: 300}
+MoonlightHighScoreData:
+- {date: 'Sun Oct  3 17:38:46 2010', inits: EMM, score: 50000}
+MotherlodeChampHighScoreData:
+- {date: 'Sat Jan 02 21:02:14 2016', inits: MAC, score: 1000000}
+QuickdrawChampHighScoreData:
+- {date: 'Sun Jan 03 00:12:29 2016', inits: MAC, score: 7}
+RiverBankHighScoreData:
+- {date: 'Sun Oct  3 22:05:01 2010', inits: OIC, score: 2}
+ShowdownChampHighScoreData:
+- {date: 'Sun Oct  3 22:05:01 2010', inits: EMM, score: 2}
+StampedeChampHighScoreData:
+- {date: 'Sun Jan 03 00:12:29 2016', inits: MAC, score: 1000000}
+SwitchHits: {15 MINE ENTRANCE: 0, 16 L OUTLANE: 2, 17 R RETURN LANE: 0, 18 SHOOTER LANE: 0,
+  26 L RETURN LANE: 0, 27 R OUTLANE: 0, 28 BOT R QUICKDRAW: 0, 36 L LOOP BOT: 0, 37 R LOOP BOT: 0,
+  44 TOP R QUICKDRAW: 0, 46 BEER MUG: 0, 47 L BONUS LANE: 0, 48 JETS EXIT: 0, 51 L SLINGSHOT: 0,
+  52 R SLINGSHOT: 0, 53 L JET BUMPER: 0, 54 R JET BUMPER: 0, 55 BOT JET BUMPER: 0,
+  56 R LOOP TOP: 0, 57 R BONUS LANE: 0, 58 L LOOP TOP: 0, 65 R RAMP MAKE: 0, 66 R RAMP ENTER: 0,
+  67 SKILL BOWL: 0, 68 R RAMP BOTTOM: 0, 73 SALOON GATE: 0, 75 BART TOY: 0, 82 C RAMP ENTER: 0,
+  83 L RAMP MAKE: 0, 84 C RAMP MAKE: 0, 85 L RAMP ENTER: 0, 86 TOP L QUICKDRAW: 0,
+  87 BOT L QUICKDRAW: 0}
+TownDrunkHighScoreData:
+- {date: 'Sun Jan 03 00:12:29 2016', inits: MAC, score: 20}
+TumbleweedChampHighScoreData:
+- {date: 'Sun Jan 03 00:12:29 2016', inits: MAC, score: 11}
+UndertakerHighScoreData:
+- {date: 'Sun Jan 03 00:12:29 2016', inits: MAC, score: 13}

@@ -1,0 +1,70 @@
+font_path:
+    - C:\P-ROC\shared\dmd\
+    - ./assets/dmd/
+config_path:
+    - C:\P-ROC\shared\config\
+dmd_path: ./assets/dmd/
+sound_path: ./assets/sound/
+voice_dir: voice/ # i.e., this is assets/sound/voice/
+sfx_dir: sfx/
+music_dir: music/
+hdfont_path: ./assets/fonts/
+
+pinproc_class: procgame.fakepinproc.FakePinPROC # comment out this line when using a real P-ROC. 
+
+# all of this is for the hdDMD
+use_virtual_dmd_only: True          # don't try to talk to the real DMD (seriously, don't)
+dmd_grid_path: ./assets/dmd/        # where to find the dmdgrid32x32.png file
+dmd_dots_w: 128                     # the display width in virtual dots
+dmd_dots_h: 32                     # the display height in virtual donts
+dmd_dot_filter: True                # enable to virtual dot effect; false disables dot separation
+dmd_fullscreen: False               # Full-screen mode scales the contents to fit the full display; may not look right
+desktop_dmd_scale: 1               # the dmd scale is the multiplier per dot.  At 5 each dot is 5x5 pixels
+dmd_framerate: 30
+screen_position_x: 2000              # an offset for where the window should be located on launch -- 1366x768 is me, so 
+screen_position_y: 337              # 224*5x112*5 = 1120x560; the difference is 246x208 hence the offsets 123x104
+dmd_window_border: True             # show a window border?  In the machine, go without it, and with black wallpaper
+
+use_desktop: True
+color_desktop: True
+
+# Where you want your log file to go. Use "stdout" for then screen.
+log_destination: ./log.text
+p_game_map_file: /P-ROC/shared/vp_game_map.yaml  # relevant for Visual Pinball (only) # Change this to where you create your map file
+
+PYSDL2_DLL_PATH: C:\P-ROC\DLLs\ # where to find the sdl2.dll
+
+
+keyboard_switch_map:
+    # Enter, Up, Down, Exit
+    7: enter
+    8: down
+    9: up
+    0: exit
+    # Start:
+    q: leftOutlane
+    w: rightReturnLane
+    e: rightOutlane
+    r: bottomRightStandUp
+    t: beerMug
+    y: topRightStandUp
+    u: rightSlingshot
+    i: leftJetBumper
+    o: rightJetBumper
+    c: rightLoopTop
+    a: rightBonusLane
+    s: startButton #SD15
+    d: rightRampMake
+    f: rightRampEnter
+    g: saloonBart
+    h: leftLoopTop
+    j: leftRampEnter
+    k: minePopper
+    l: centerRampMake
+    z: shooterLane
+    x: mineEntrance
+    c: troughEject
+    v: skillBowl
+    b: saloonGate
+    n: centerRampMake
+    m: badGuySW2

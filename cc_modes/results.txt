@@ -1,0 +1,513 @@
+ambush.py:        #print "A M B U S H"
+ambush.py:                    ##print "CANCEL TIMER: " + self.targetNames[target] + " HAD: " + str(self.badGuyTimer[target])
+ambush.py:                ##print "RESTARTING TARGET: " + str(target) + " TIME: " + str(self.badGuyTimer[target])
+ambush.py:        ##print "TIMER WORKING ON TARGET: " + str(target) + " - TIME: " + str(self.badGuyTimer[target])
+ambush.py:            #print "BAD GUY " + str(target) + " ESCAPES"
+ambush.py:                #print "AMBUSH LOST"
+ambush.py:            #print "KILLING GUY: " + str(target)
+ambush.py:            print self.game.show_tracking('ambushPoints')
+ambush.py:        #print "TOTAL AMBUSH: " + str(ep.format_score(totalPoints))
+ambush.py:            #print "END AMBUSH BAD GUYS " + str(i)
+ambush.py:            #print "BAD GUY STATUS " + str(i) + " IS " + str(self.game.show_tracking('badGuysDead',i))
+ambush.py:        #print "AMBUSH IS DISPATCHING DELAYS"
+ambush.py:        #print "DEACTIVATING BAD GUY: " + str(target)
+ambush.py:        #print "ACTIVATING BAD GUY:" + str(dude)
+attract-021715.py:            #print "Custom Message Enabled"
+attract-021715.py:            #print "Custom Message Not Enabled"
+attract-021715.py:            #print "Building Custom Message pages " + str(self.customPages)
+attract-021715.py:                #print "Page " + str(n)
+attract-021715.py:                    #print "Line one has text rendering"
+attract-021715.py:                    #print "Line 1 has no text, skipping page"
+attract-021715.py:        ##print "ATTRACT TIMER: " + str(self.timer)
+attract-021715.py:                #print "LEFT FLIPPER ACTIVATING TOURNAMENT"
+attract-021715.py:            #print "Tournament Countdown Finished"
+attract-021715.py:            #print "Tournament Countdown Continues - " + str(self.tournamentTimer)
+attract-021715.py:        #print "PARTY MODE SELECT TIMEOUT"
+attract-021715.py:        #print "SETTING NEW PARTY MODE"
+attract-021715.py:                #print "ADDING PARTY MODE"
+attract-021715.py:            #print "REMOVING PARTY MODE"
+attract-021715.py:            #print "SOUND COUNT: " + str(self.soundCount) + " OF " + str(self.NOISY_COUNT)
+attract-021715.py:            #print "Attract start button got pressed"
+attract-021715.py:                    #print "BALL SEARCH"
+attract-021715.py:        #print "DELETING ATTRACT DELAYS"
+attract.py:            #print "Custom Message Enabled"
+attract.py:            #print "Custom Message Not Enabled"
+attract.py:            #print "Building Custom Message pages " + str(self.customPages)
+attract.py:                #print "Page " + str(n)
+attract.py:                    #print "Line one has text rendering"
+attract.py:                    #print "Line 1 has no text, skipping page"
+attract.py:        ##print "ATTRACT TIMER: " + str(self.timer)
+attract.py:                #print "LEFT FLIPPER ACTIVATING TOURNAMENT"
+attract.py:            #print "Tournament Countdown Finished"
+attract.py:            #print "Tournament Countdown Continues - " + str(self.tournamentTimer)
+attract.py:        #print "PARTY MODE SELECT TIMEOUT"
+attract.py:        #print "SETTING NEW PARTY MODE"
+attract.py:                #print "ADDING PARTY MODE"
+attract.py:            #print "REMOVING PARTY MODE"
+attract.py:            #print "SOUND COUNT: " + str(self.soundCount) + " OF " + str(self.NOISY_COUNT)
+attract.py:            #print "Attract start button got pressed"
+attract.py:                    #print "BALL SEARCH"
+attract.py:        #print "DELETING ATTRACT DELAYS"
+badge.py:        #print "RESETTING BADGE STATUS"
+badge.py:        print self.game.show_tracking('starStatus')
+badge.py:        #print "BADGE STATUS: "
+badge.py:        print self.game.show_tracking('starStatus')
+badge.py:        #print "Checking if bionic bart is ready"
+badge.py:            #print "Don't see a False - setting BB to ready"
+badge.py:            #print "Bart is not ready yet - Badge incomplete"
+bad_guys.py:            #print "BAD GUY 0 HIT"
+bad_guys.py:            #print "BAD GUY 1 HIT"
+bad_guys.py:            #print "BAD GUY 2 HIT"
+bad_guys.py:            #print "BAD GUY 3 HIT"
+bad_guys.py:        #print "QD STATUS CHECK: " + str(self.game.show_tracking('quickdrawStatus'))
+bad_guys.py:            #print "FIGHTING BOSS BART - TARGET DIVERTS"
+bad_guys.py:            #print "SHOWDOWN RUNNING OMG"
+bad_guys.py:        #print "TARGET RAISE ATTEMPT " + str(target)
+bad_guys.py:        #print self.game.show_tracking('badGuyUp')
+bad_guys.py:        #print "Target Start " + str(target) + " on time " + str(self.on_time)
+bad_guys.py:                #print "PENDING CHECK RETRYING TARGET " + str(target)
+bad_guys.py:            #print "TARGET " + str(target) + " PENDING CHECK PASSED"
+bad_guys.py:        #print "DEACTIVATING TARGET " + str(target)
+bad_guys.py:            #print "ACTIVATING TARGET " + str(target)
+bad_guys.py:            #print self.game.show_tracking('badGuyUp')
+bad_guys.py:            #print "SYSTEM THINKS TARGET " + str(target) + " IS ALREADY UP"
+ball_search.py:        #print "--> BALL SEARCH ENABLED <--"
+ball_search.py:        #print "-->> BALL SEARCH DISABLED <<--"
+ball_search.py:                    ##print "BALL SEARCH NULL - BALL ON STOP SWITCH"
+ball_search.py:                    ##print "Rescheduling a check in 2 seconds"
+ball_search.py:                ##print "BALL SEARCH: Scheduling new countdown"
+ball_search.py:        ##print "Ball Search - Stop Switch"
+ball_search.py:        #print "DO A BARREL ROLL! - er, BALL SEARCH!"
+bank_robbery.py:        #print "Bank robbery thinks the ball drained"
+bank_robbery.py:            #print "It's over already!"
+bank_robbery.py:            ##print "IN PROGRESS " + str(self.modeTimer)
+bank_robbery.py:            ##print "Shooter info: Target - " + str(self.shotTarget) + " Timer - " + str(self.shotTimer)
+bank_robbery.py:        #print "KILLING DUDE " + str(shot)
+bank_robbery.py:            #print "HALTING -- BUMPERS/MINE/SALOON"
+bank_robbery.py:        #print "ENDING SAVE POLLY"
+bank_robbery.py:        #print "DUDES:"
+bank_robbery.py:        print dudes
+bank_robbery.py:        #print "THE SHOOTER IS: " + str(self.shooter)
+bart.py:        #print "Difficulty is set to - " + difficulty
+bart.py:        #print "BART STATUS: " + status
+bart.py:        #print "CURRENT BART: " + str(self.game.show_tracking('currentBart'))
+bart.py:        print self.brother + " IS THE BROTHER"
+bart.py:        #print "DAMAGE BART"
+bart.py:        #print "HITS FOR THIS BART: " + str(self.hitsThisBart)
+bart.py:        #print "CURRENT HITS: " + str(currentHits)
+bart.py:        #print "DEFEATING BART"
+bart.py:        #print "MADE IT TO DAMAGE ONE"
+base.py:        #print "CHECKING TRACKING ball drained LR: " + str(self.game.show_tracking('leftRampStage'))
+base.py:                #print "HIGH NOON IS RUNNING - HOLD IT (or boss bart)"
+base.py:                #print "Beer Mug Hit"
+base.py:                #print "Quote Specific Number is: " + str(n)
+base.py:                #print "Randomized Quote Number is: " + str(n)
+base.py:                #print "Quote Number Defaulted to zero"
+base.py:            #print "STOPPING " + str(key)
+base.py:        #print "TILT STATUS: " + str(status)
+base.py:                #print "Tilt Roll Call: " + mode.myID
+base.py:            #print "Tribute raising post on left"
+base.py:            ##print "PASSING - Guns disabled"
+base.py:            #print self.game.show_tracking('stackLevel')
+base.py:            ##print "Guns not allowed right now"
+base.py:            ##print "Guns allowed right now"
+base.py:            #print "Max bumps, shut er down!"
+base.py:            ##print "Both flippers pressed"
+base.py:            #print "AUTOPLUNGE, MF - Left to autoplunge " + str(self.game.trough.balls_to_autoplunge)
+base.py:        #print "CHECKING STAMPEDE"
+base.py:                #print "CVA, BB, or High Noon Running - no stampede"
+base.py:                #print "Balls drained before action, pass"
+base.py:                #print "Stampede check: Gunfight in the way, delaying to try again"
+base.py:            #print "Doubler enabled - Passing QD Hit"
+base.py:                ##print "QUICKDRAW IS RUNNING OR LIT"
+base.py:        #print "BONUS TIMES: " + str(times)
+base.py:        #print "Marshall Multiball Kickoff Attempt"
+base.py:            #print "Well you blew that. Marshall aborted"
+base.py:                #print "Game is busy - Marshall Kickoff Queued"
+base.py:        #print "ADDING FREE EXTRA BALL"
+base.py:        #print ""
+base.py:        #print "******************************"
+base.py:        #print "* SOMETHING ODD/BAD HAPPENED *"
+base.py:        #print "*   JUST BEFORE THIS POINT   *"
+base.py:        #print "******************************"
+base.py:        #print ""
+base.py:            #print "AUTO PLUNGE CORRECTION - Triggered by " + string
+bionic_bart.py:            #print "BALL DRAINED - BIONIC IS ENDING"
+bionic_bart.py:        #print "Starting bionic bart battle"
+bionic_bart.py:            #print "Bionic Bart active shot hit " + str(shot)
+bionic_bart.py:                #print "WEAPON IS LOADED THIS IS A MISS"
+bionic_bart.py:                #print "WEAPON IS NOT LOADED THIS IS A MISS"
+bionic_bart.py:        #print "ACTIVATING SHOTS - VALUE: " + str(amount)
+bionic_bart.py:        #print "Hitting bionic bart"
+bionic_bart.py:            #print "Bionic Hit Saloon Kick"
+bionic_bart.py:        #print "Bionic Finish Up Saloon Kick"
+combos.py:        ##print "COMBO TIMER: " + str(self.myTimer)
+combos.py:        ##print "Combos have ENDED"
+combos.py:        ##print "Combos are ON"
+combos.py:        #print "COMBO HIT - SCORING"
+combos.py:        #print "COMBOS: " + str(comboTotal)
+combos.py:        #print "CHAIN VALUE: " + str(self.chain)
+combos.py:        #print "I MADE IT THROUGH COMBO DISPLAY"
+cva.py:            #print "aborting running quickdraw for CVA"
+cva.py:            #print "CVA started via " + str(entry)
+cva.py:            #print "STEP 2"
+cva.py:                        #print "MOVING LEFT"
+cva.py:                        #print "MOVING RIGHT"
+cva.py:                        #print "WAT?"
+cva.py:        #print "TELEPORT DIRECTION - " + str(self.direction[0])
+cva.py:            #print "ALIEN 0 - " + str(aliens[0])
+cva.py:            #print "ALIEN 0 - " + str(aliens[0])
+cva.py:            #print "REMOVE ALIEN - " + str(target)
+cva.py:                #print "WAVE 2 NOW"
+cva.py:        ##print "GI FLUTTER"
+cva.py:        ##print "GI BLOOM"
+cv_tribute.py:        #print "Ringmaster Mine Popper Register"
+cv_tribute.py:        #print "Ringmaster Saloon Popper Register"
+cv_tribute.py:        #print "RELEASE THE BALL FOR TRIBUTE"
+cv_tribute.py:            #print "TRIBUTE MINE EJECT"
+cv_tribute.py:            #print "TRIBUTE POST DROP"
+cv_tribute.py:        #print "Hit Ringmaster"
+cv_tribute.py:        #print "HALTING Ringmaster IN BUMPERS/MINE"
+drunk_multiball.py:        #print "STARTING DRUNK ASS MULTIBALL"
+drunk_multiball.py:        #print "DMB Disabled, Drunk bonus"
+drunk_multiball.py:        print self.active
+drunk_multiball.py:        #print "LIGHTING JACKPOT"
+drunk_multiball.py:        #print "ENDING DRUNK MULTIBALL"
+gold_mine_multiball.py:            #print "Down to one ball"
+gold_mine_multiball.py:                #print "Second 1 ball drain routine"
+gold_mine_multiball.py:        #print "JACKPOT STATUS: " + str(self.game.show_tracking('jackpotStatus',shot))
+gold_mine_multiball.py:        #print "MULTIBALL STARTING"
+gold_mine_multiball.py:            print("Goldmine Multiball - Launching " + str(total) + "balls")
+gold_mine_multiball.py:            #print "RESTART DISPLAY"
+gold_mine_multiball.py:        #print "MULTIBALL ENDED"
+gunfight.py:            #print "GUNFIGHT BALL DRAINED ROUTINE"
+gunfight.py:            #print "Gunfight - Left ramp enter killed it"
+gunfight.py:            #print "Gunfight - Center ramp make killed it"
+gunfight.py:            #print "Gunfight - right ramp make killed it"
+gunfight.py:            #print "Gunfight - beer mug killed it"
+gunfight.py:            #print "Gunfight - saloon gate killed it"
+gunfight.py:            #print "Gunfight - mine entrance killed it"
+gunfight.py:            #print "Gunfight - left loop bottom killed it"
+gunfight.py:            #print "Gunfight - right loop bottom killed it"
+gunfight.py:        #print "GUNFIGHT GOES HERE"
+gunfight.py:        #print "RAISE POST ON SIDE: " + str(side)
+gunfight.py:        #print "ENEMY: " + str(enemy)
+gunfight.py:        print badGuys
+gunfight.py:        print badGuys
+gunfight.py:        #print "Gunfight - Lost routine"
+gunfight.py:        #print "Hard mode: Active Target is now: " +str(badGuys[0])
+gunfight.py:        #print "Hard Mode: wait time is " + str(myWait)
+gunfight.py:        #print "POP ENEMY: " + str(enemy)
+gunfight.py:        #print "POP ENEMY: " + str(enemy)
+gunfight.py:        #print "POP ENEMY: " + str(enemy)
+gunfight.py:        #print "POP ENEMY: " + str(enemy)
+gunfight.py:        #print "DROP THE POST"
+high_noon.py:        #print "BAD GUY 0 HIT"
+high_noon.py:        #print "BAD GUY 1 HIT"
+high_noon.py:        #print "BAD GUY 2 HIT"
+high_noon.py:        #print "BAD GUY 3 HIT"
+high_noon.py:                #print "HIGH NOON: reactivate target " + str(target)
+high_noon.py:                #print "SHOULD GET GOING NOW"
+high_noon.py:        #print "HIGH NOON FINAL DISPLAY - STEP " + str(step)
+high_noon.py:            #print "HIGH NOON JACKPOT TALLY"
+high_noon.py:            #print "HIGH NOON BAD GUY TALLY"
+high_noon.py:            #print "HIGH NOON TOTAL"
+high_noon.py:        #print "TALLY LOOP STEP " + str(step)
+high_noon.py:        #print "END HIGH NOON BEGINS"
+high_noon.py:        #print "END HIGH NOON BALL LAUNCH"
+high_noon.py:        #print "END HIGH NOON LOAD SKILLSHOT GOES HERE"
+interrupter_jones.py:            #print "DANGER DANGER"
+interrupter_jones.py:            #print "Display"
+interrupter_jones.py:        #print "Interrupter Passing Tilt"
+interrupter_jones.py:            #print "Playing Closing Song"
+interrupter_jones.py:        #print "Setting delay for start button"
+interrupter_jones.py:        #print "Game start enabled again"
+interrupter_jones.py:            #print "STATUS GOES HERE"
+interrupter_jones.py:        #print "STATUS ENDING"
+interrupter_jones.py:        #print "Volume Down"
+interrupter_jones.py:            #print "New volume: " + str(volume)
+interrupter_jones.py:        #print "Volume Up"
+interrupter_jones.py:            #print "New volume: " + str(volume)
+interrupter_jones.py:        #print "ENTERING NEW SERVICE MODE"
+interrupter_jones.py:            #print "Fired knocker!"
+last_call.py:                #print "Ending Last call"
+last_call.py:        #print "Saloon hit"
+last_call.py:            #print "not ending"
+last_call.py:        #print "Score string: " + scoreString
+last_call.py:        #print "Last call - player index: " + str(self.game.current_player_index)
+left_ramp.py:        #print "Ramp Stage " + str(stage)
+left_ramp.py:            #print "CHECING TRACKING Left ramp LR: " + str(self.game.show_tracking('leftRampStage'))
+left_ramp.py:            #print "RIVER VICTORY"
+left_ramp.py:        #print "TRANSITION MF"
+marshall_multiball.py:        #print "Starting Marshall Multiball"
+marshall_multiball.py:            #print "WELL MMB KNOWS IT IS RUNNING"
+marshall_multiball.py:        #print "Marshall Multiball points: " + str(self.pointTotal)
+marshall_multiball.py:        #print "Current best: " + str(self.game.show_tracking('marshallBest'))
+marshall_multiball.py:            #print "Setting marshallBest to " + str(self.pointTotal)
+match.py:            #print "Multiplier = " + str(multiplier)
+match.py:        #print "Len Set = " + str(self.uniqueDigits)
+match.py:        #print "Match break point " + str(match_target)
+match.py:        #print "Match value chosen " + str(match_value)
+match.py:            #print "Match winner via value selection!"
+match.py:                #print "Attempting to remove " + str(n)
+match.py:                    #print "Found it"
+match.py:                    #print "Already removed"                    
+match.py:                #print "Player " + str(i) + "earned last call in replay"
+match.py:                #print "PLAYER SCORE - " + str(score)
+match.py:                #print "MATCH DIGITS - " + str(digit)
+match.py:                #print "Adding digit " + str(digit)
+match.py:        #print "Number of players = " + str(len(self.game.players))
+match.py:            #print "Award processing Player " + str((i + 1))
+match.py:                print ("Player " + str(i) + " gets last call")
+mb_tribute.py:        #print "Drac Mine Popper Register"
+mb_tribute.py:        #print "Drac Saloon Popper Register"
+mb_tribute.py:        #print "RELEASE THE BALL FOR TRIBUTE"
+mb_tribute.py:            #print "TRIBUTE MINE EJECT"
+mb_tribute.py:            #print "TRIBUTE POST DROP"
+mb_tribute.py:        #print "Hit Drac"
+mb_tribute.py:            #print "Moving Dracula"
+mb_tribute.py:        #print "HALTING DRAC ATTACK IN BUMPERS/MINE"
+mine.py:        #print "Difficulty is set to - " + difficulty
+mine.py:        print stackLevel
+mine.py:            #print "STARTING HIGH NOON"
+mine.py:            #print "LOCKED BALLS: " + str(lockedBalls)
+mine.py:        #print "MINE HITS: " + str(myMineHits)
+mine.py:        #print "HITS TO LIGHT THIS LOCK: " + str(self.hitsToLightLock[lockedBalls])
+mine.py:        #print "HITSTATUS: " + str(hitStatus)
+mine.py:        print str(hitStatus) + " shots left to light lock"
+mine.py:        #print "LOCK IS LIT ... AND SO AM I"
+mine.py:        #print "MULTIBALL IS LIT"
+mine.py:        #print "EXTRA BALLS PENDING: " + str(derp)
+mine.py:        #print "EXTRA BALL LIT"
+mine.py:        #print "Extra balls total: " + str(ebt)
+mine.py:        #print "Aborting extra ball display"
+mm_tribute.py:        #print "Trolls It Mine Popper Register"
+mm_tribute.py:        #print "Trolls It Saloon Popper Register"
+mm_tribute.py:            #print "It's a hit - setting loop back to idle"
+mm_tribute.py:        #print "Resetting Troll on target " + str(target)
+mm_tribute.py:        #print "HALTING TROLLS IN BUMPERS/MINE"
+moonlight.py:        #print "To Enable is: " + str(self.enable)
+moonlight.py:                #print "Enabled Shot: " + str(shot)
+moonlight.py:                #print "Available: "
+moonlight.py:                print self.availableShots
+moonlight.py:                #print "Live:"
+moonlight.py:                print self.liveShots
+moonlight.py:                    #print "Shots left to enable: " + str(self.enable)
+moonlight.py:                    #print "No Shots available to Enable"
+moonlight.py:            #print "Enabling 2 more shots"
+mountain.py:        #print "Mine Stop Called"
+mountain.py:        #print "Opening Mine"
+mountain.py:            #print "Mine Mountain Move called"
+mountain.py:            #print "Mountain move called - but already in motion"
+mountain.py:        ##print "Mine Encoder :" + str(self.mineTicks) + " Solid Run: " + str(self.solidRun) + " Reset: " + str(self.mineReset)
+mountain.py:        #print "Mine Home Active, resetting ticks - Reset = " + str(self.mineReset)
+mountain.py:            #print "MOUNTAIN BUSY, PASSING"
+mountain.py:            #print "Mountain Ejecting wth Reset call"
+mountain.py:        #print "Mountain Solid Run Called"
+mountain.py:        #print "Mountain Reset Called - force = " + str(force)
+move_your_train.py:        #print "Beginning Move Your Train"
+move_your_train.py:        #print "Stop train at value: " + str(self.game.train.stopAt)
+move_your_train.py:        #print "Move your train actual start"
+move_your_train.py:        #print "Moving Train " + str(direction)
+move_your_train.py:        #print "TRAIN OFFSET: " + str(self.trainOffset)
+move_your_train.py:        #print "TRAIN STATUS:" + str(self.game.train.inMotion)
+move_your_train.py:            #print "Stop train at value: " + str(self.game.train.stopAt)
+move_your_train.py:        #print "TRain Idle display"
+move_your_train.py:        #print "MYT - Setting offset to " + str(value)
+move_your_train.py:        #print "Ending Move Your Train"
+party_mode.py:            #print "No Match on Left"
+party_mode.py:            #print "No match on Right"
+quickdraw.py:        #print "STARTING QUICKDRAW ON SIDE:" + str(side)
+quickdraw.py:        #print "AVAILABLE BAD GUYS"
+quickdraw.py:        #print choices
+quickdraw.py:        #print "BAD GUY ACTIVE IS: " + str(self.target)
+quickdraw.py:        #print "QUICKDRAW WON IS KILLING THE MUSIC"
+quickdraw.py:        #print "ENDING QUICKDRAW"
+quickdraw.py:        #print "QUICKDRAW MUSIC BACK ON CHECK - BALLS IN PLAY: " + str(self.game.trough.num_balls_in_play)
+quickdraw.py:                #print "SHOWDOWN STATUS IS READY"
+quickdraw.py:        #print "QUICKDRAW IS DISPATCHING DELAYS"
+right_loop.py:            #print "RIGHT LOOP TOP HIT"
+right_loop.py:        #print "TRANSITIONING WTF"
+right_ramp.py:            #print "BANK VICTORY"
+river_chase.py:            #print "MOVING HORSE " + str(self.distance_value)
+river_chase.py:                #print "I SHOULD DO THE BANNER MON"
+river_chase.py:        #print "HALTING -- BUMPERS/MINE/SALOON"
+river_chase.py:        #print "BUILDING DISPLAY"
+river_chase.py:        #print "HIT BANNER GOES HERE"
+river_chase.py:        #print "ENDING SAVE POLLY"
+saloon.py:        #print "Saloon popper mode - active for 300 ms"
+saloon.py:        #print "saloon shot"
+saloon.py:            #print "cva bionic bail"
+saloon.py:            #print "saloon passing to last call"
+saloon.py:                #print "Saloon Stack bail"
+saloon.py:        #print "SALOON EJECTING"
+saloon.py:        #print "CHECKING BOUNTY"
+saloon.py:        #print "SELECTED BOUNTY: " + self.bountyPrize
+saloon.py:            #print "WTF BOUNTY: " + self.bountyPrize
+saloon.py:        #print "GUNFIGHT IS LIT"
+saloon.py:            #print "I GOT A GUNFIGHT CALLBACK"
+saloon.py:            #print "Light Gunfight - Delay timer for unbusy"
+save_polly.py:        #print "TTTT Mine Popper Register"
+save_polly.py:        #print "TTTT Saloon Popper Register"
+save_polly.py:            #print "PAUSE TRAIN"
+save_polly.py:            #print "RESUMING POLLY"
+save_polly.py:            #print "POLLY PAUSED: " + str(time)
+save_polly.py:        #print "HALTING TRAIN IN BUMPERS/MINE"
+save_polly.py:        #print "Giving Polly Award"
+save_polly.py:        #print "OMG POLLY IS DEAD"
+save_polly.py:        #print "ENDING SAVE POLLY"
+save_polly.py:        #print "SAVE POLLY IS DISPATCHING DELAYS"
+score_display.py:        print ("Checking ball count on door close")
+score_display.py:                print ("The trough is full, but there should be a ball in play. Stealth Launch")
+showdown.py:                #print "Ending Showdown due to ball drain"
+showdown.py:        #print "S H O W D O W N"
+showdown.py:        #print "KILLING GUY: " + str(target)
+showdown.py:            #print "THEY'RE ALL DEAD JIM"
+showdown.py:            #print "END SHOWDOWN BAD GUYS " + str(i)
+showdown.py:            #print "BAD GUY STATUS " + str(i) + " IS " + str(self.game.show_tracking('badGuysDead',i))
+showdown.py:        #print "SHOWDOWN IS DISPATCHING DELAYS"
+skillShot.py:            ##print "Left flipper hit - super is active"
+skillShot.py:            ##print "Left Flipper hit"
+skillShot.py:            ##print "right flipper hit - super is active"
+skillShot.py:            ##print "right flipper hit"
+skillShot.py:        #print "Skillshot Started"
+skillShot.py:        #print "Unlit badge points: " + str(left)
+skillShot.py:        #print "SKILLSHOT GENERATE PRIZES"
+skillShot.py:                    #print "Found " + prizes[item] + " taking out of rotation"
+skillShot.py:        #print "Selected Prizes: " + self.selectedPrizes
+skillShot.py:            #print "UPDATING LAYER AFTER PRIZE GENERATE"
+skillShot.py:        #print "Copying the score layer"
+skillShot.py:            #print "ACTIVE SHOT IS: " + str(self.active)
+skillShot.py:            #print "Tribute Shot Set to: " + str(self.game.tribute_launcher.shot)
+skillShot.py:        #print "SkillShot Awarded " + str(self.selectedPrizes[5:]) + ": " + str(awardStringTop) + " " + str(awardStringBottom)
+skillShot.py:                #print "LEFT FLIPPER ACTIVATING SUPER AFTER 2 SEC"
+skillShot.py:                #print "RIGHT FLIPPER ACTIVATING SUPER AFTER 2 SEC"
+skillShot2.py:            ##print "Left flipper hit - super is active"
+skillShot2.py:            ##print "Left Flipper hit"
+skillShot2.py:            ##print "right flipper hit - super is active"
+skillShot2.py:            ##print "right flipper hit"
+skillShot2.py:        #print "Skillshot Started"
+skillShot2.py:        #print "Unlit badge points: " + str(left)
+skillShot2.py:        #print "SKILLSHOT GENERATE PRIZES"
+skillShot2.py:                    #print "Found " + prizes[item] + " taking out of rotation"
+skillShot2.py:        #print "Selected Prizes: " + self.selectedPrizes
+skillShot2.py:            #print "UPDATING LAYER AFTER PRIZE GENERATE"
+skillShot2.py:        #print "Copying the score layer"
+skillShot2.py:            #print "ACTIVE SHOT IS: " + str(self.active)
+skillShot2.py:            #print "Tribute Shot Set to: " + str(self.game.tribute_launcher.shot)
+skillShot2.py:        #print "SkillShot Awarded " + str(self.selectedPrizes[8:]) + ": " + str(awardStringTop) + " " + str(awardStringBottom)#change 5 to 8 4-2-14
+skillShot2.py:                #print "LEFT FLIPPER ACTIVATING SUPER AFTER 2 SEC"
+skillShot2.py:                #print "RIGHT FLIPPER ACTIVATING SUPER AFTER 2 SEC"
+skillShot_orig.py:            ##print "Left flipper hit - super is active"
+skillShot_orig.py:            ##print "Left Flipper hit"
+skillShot_orig.py:            ##print "right flipper hit - super is active"
+skillShot_orig.py:            ##print "right flipper hit"
+skillShot_orig.py:        #print "Skillshot Started"
+skillShot_orig.py:        #print "Unlit badge points: " + str(left)
+skillShot_orig.py:        #print "SKILLSHOT GENERATE PRIZES"
+skillShot_orig.py:                    #print "Found " + prizes[item] + " taking out of rotation"
+skillShot_orig.py:        #print "Selected Prizes: " + self.selectedPrizes
+skillShot_orig.py:            #print "UPDATING LAYER AFTER PRIZE GENERATE"
+skillShot_orig.py:        #print "Copying the score layer"
+skillShot_orig.py:            #print "ACTIVE SHOT IS: " + str(self.active)
+skillShot_orig.py:            #print "Tribute Shot Set to: " + str(self.game.tribute_launcher.shot)
+skillShot_orig.py:        #print "SkillShot Awarded " + str(self.selectedPrizes[5:]) + ": " + str(awardStringTop) + " " + str(awardStringBottom)
+skillShot_orig.py:                #print "LEFT FLIPPER ACTIVATING SUPER AFTER 2 SEC"
+skillShot_orig.py:                #print "RIGHT FLIPPER ACTIVATING SUPER AFTER 2 SEC"
+ss_tribute.py:        #print "Frog Mine Popper Register"
+ss_tribute.py:        #print "Frog Saloon Popper Register"
+ss_tribute.py:            #print "Beer Mug Hit - Kill Frog"
+ss_tribute.py:            #print "Beer Mug Hit - Kill Frog"
+ss_tribute.py:        #print "RELEASE THE BALL FOR TRIBUTE"
+ss_tribute.py:            #print "TRIBUTE MINE EJECT"
+ss_tribute.py:            #print "TRIBUTE POST DROP"
+ss_tribute.py:            #print "Kill Frog"
+ss_tribute.py:                #print "All frogs squashed!"
+ss_tribute.py:        #print "HALTING LEAPERS IN BUMPERS/MINE"
+stampede.py:            #print "SETTING TRACKING FOR:" + shot
+stampede.py:        #print "ENDING S T A M P E D E"
+stampede.py:            #print "Goldmine is running"
+stampede.py:            #print "Gold mine is not running"
+stampede_continued.py:            #print "SETTING TRACKING FOR:" + shot
+stampede_continued.py:        #print "Shifting - active jackpot is now " + str(self.active)
+stampede_continued.py:        #print "ENDING S T A M P E D E"
+stampede_continued.py:            #print "Goldmine is running"
+stampede_continued.py:            #print "Gold mine is not running"
+taf_tribute.py:        #print "Cousin It Mine Popper Register"
+taf_tribute.py:        #print "Cousin It Saloon Popper Register"
+taf_tribute.py:        ##print "TAF MODE TIME: " + str(self.modeTimer)
+taf_tribute.py:        #print "Hit IT"
+taf_tribute.py:        #print "Miss IT"
+taf_tribute.py:        #print "HALTING COUSIN IT IN BUMPERS/MINE"
+train_toy.py:                print("Encoder not registering - Train Disabled")
+train_toy.py:        ##print "Train Progress: " + str(self.trainProgress)
+train_toy.py:        print("Stopping Train")
+train_toy.py:        print("Train Fast Forwrd")
+train_toy.py:            print("Train Moving Fast Forward")
+train_toy.py:            print("Backing train up")
+train_toy.py:            print("Resetting Train - Step 1")
+train_toy.py:            print("Resetting Train - Step 2")
+train_toy.py:                #print "I counted " + str(self.ticksCounted) + " ticks of the encoder"
+train_toy.py:                #print "Setting stop point to " + str(self.mytStop)
+train_toy.py:                    #print "Disabling MYT, train didn't register well"
+train_toy.py:                #print "Setting increment to " + str(self.mytIncrement)
+train_toy.py:                #print "Game thinks the train is home already"
+tribute_launcher.py:        #print "Ball is in the " + position
+tribute_launcher.py:            #print "Selected Monster Bash"
+tribute_launcher.py:            #print "Selected Addams Family"
+tribute_launcher.py:            #print "Selected Medieval Madness"
+tribute_launcher.py:            #print "Selected Cirqus Voltaire"
+tribute_launcher.py:            #print "Selected Scared Stiff"
+tribute_launcher.py:            #print "WAT"
+trough.py:## This is a heavily modified copy of the trough code from pyprocgame - I added a bunch of "print"s to
+trough.py:            #print "Ignoring this drain - Early Save Switch Activated"
+trough.py:        #print "CHECKING SWITCHES - Balls in play: " + str(self.num_balls_in_play)
+trough.py:            #print "Passing check switches - eject count more than 1"
+trough.py:            #print "Passing check - Launch in progress"
+trough.py:            #print "Check Switches - launch status: " + str(self.launch_in_progress)
+trough.py:                #print "BALL SAVE IS ACTIVE"
+trough.py:                #print "TROUGH SHOULD SAVE " + str(self.num_balls_to_save) + " BALLS"
+trough.py:                    #print "Check Switches wants to save a ball"
+trough.py:                    #print "Ball save is on, but balls in play + balls in trough line up"
+trough.py:                #print "BALL SAVE IS NOT ACTIVE"
+trough.py:                        #print "THE TROUGH IS FULL, BALL SAVE INACTIVE, ENDING BALL"
+trough.py:                    #print "BALL DRAINED"
+trough.py:                        #print "BALLS NOW IN PLAY: " + str(self.num_balls_in_play)
+trough.py:                #print "WHAT THE - NO BALLS IN PLAY, and we're launching - try again?"
+trough.py:                    #print "It fell back in, try again"
+trough.py:                #print "Active trough switch: " + str(switch)
+trough.py:            #print "There's a ball stacked up in the way of the eject opto"
+trough.py:        #print "balls counted: " + str(ball_count)
+trough.py:        #print "Checking if trough is full"
+trough.py:        #print "I SHOULD LAUNCH A BALL NOW"
+trough.py:            #print "Launch status: " + str(self.launch_in_progress)
+trough.py:        #print "Launch action loop"
+trough.py:                #print "Trough - scheduling the Bounce_Delay"
+trough.py:                #print "Fakepinproc - Finishing Launch"
+trough.py:            #print "Shooter lane busy - reschedule"
+trough.py:        #print "Finishing Launch"
+trough.py:        #print "BALL LAUNCHED - left to launch: " +str(self.num_balls_to_launch)
+trough.py:        #print "IN PLAY: " + str(self.num_balls_in_play)
+trough.py:            #print "More balls to launch: " + str(self.num_balls_to_launch) + " - Waiting for clear"
+trough.py:                #print "Fakepinproc - post launch check skipped"
+trough.py:            #print "Shooter lane inactive is clearing the busy flag"
+trough.py:            #print "Skill bowl is clearing the busy flag"
+trough.py:        #print "Safety net is clearing the lane busy"
+trough.py:        #print "Running Post Launch Check"
+trough.py:            #print "Everything Adds up at the end of the launch."
+trough.py:            #print "There aren't as many balls in the trough as there should be"
+trough.py:            #print "Ball in play: " + str(self.num_balls_in_play) + " Counted: " + str(actuallyInTrough)
+trough.py:            #print "There are more balls in the trough than there should be"
+trough.py:            #print "Balls in play: " + str(self.num_balls_in_play) + " Counted: " + str(actuallyInTrough)
+trough.py:            #print "Stealth launch to fix that"
+trough.py:            #print "Launching: " + str(num)
+trough.py:        #print "SOLID LAUNCH, GOOD TO GO"
+trough.py:        #print "Trough Eject switch count: " + str(self.eject_sw_count)
+trough.py:            #print "We're over on eject count - ball fell back in"
+trough.py:            #print "That's one"
+trough.py:            #print "Starting Ball Save for " + str(time) + " seconds"
+trough.py:        #print "Ball Save active check"
+trough.py:        #print "Saving Ball"
+trough.py:        #print "Left to save: " + str(self.num_balls_to_save)
+trough.py:            #print "Last saved ball - Turning off ball save"
+
