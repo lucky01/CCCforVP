@@ -367,12 +367,14 @@ class EP_Desktop():
 
             x = 0
             y = 0
+            flipy = 0
             # fill the screen black
             self.screen.fill((0,0,0))
 
             for dot in frame_string:
                 dot_value = ord(dot)
                 image = None
+                flipy = 32 - y
                 # if we got something other than 0
                 if dot_value != 0:
                     # set the brightness and color
@@ -402,7 +404,7 @@ class EP_Desktop():
                     # set the image based on color and brightness
                     ##image = self.colors[color][bright_value]
                     if self.colors[color][bright_value]:
-                        self.screen.blit(self.colors[color][bright_value],((x*self.pixel_size), (y*self.pixel_size)))
+                        self.screen.blit(self.colors[color][bright_value],((x*self.pixel_size), (flipy*self.pixel_size)))
                     del color
                     del bright_value
                 del dot
@@ -418,6 +420,7 @@ class EP_Desktop():
 
             del x
             del y
+            del flipy
             del frame_string
 
             pygame.display.update()
