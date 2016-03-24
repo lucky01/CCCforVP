@@ -151,17 +151,16 @@ class BaseGameMode(ep.EP_Mode):
         if self.game.ball == 1 and len(self.game.players) < 4:
             self.game.add_player()
             # set a random bart bro
-            # barts: bandelero, bubba, big, rudy & boss
+            # barts: bandelero, bubba, big, betty, bull, rudy & boss
             if self.game.bart.guests:
-                barts = [0,1,2,3]
+                barts = [0,1,2,3,4]
             else:
-                barts = [0,1,2]
+                barts = [0,1,2,3]
             self.game.set_tracking('currentBart',random.choice(barts))
 
             # tick up the audits
             self.game.game_data['Audits']['Games Started'] += 1
             self.game.order_mobs()
-            self.game.lamps.startButton.enable()
             # and play a soundbyte
             if len(self.game.players) == 2:
                 self.game.base.priority_quote(self.game.assets.quote_playerTwo)
@@ -169,8 +168,6 @@ class BaseGameMode(ep.EP_Mode):
                 self.game.base.priority_quote(self.game.assets.quote_playerThree)
             elif len(self.game.players) == 4:
                 self.game.base.priority_quote(self.game.assets.quote_playerFour)
-                # if we get to the fourth player, the start button should go out
-                self.game.lamps.startButton.disable()
             self.game.interrupter.add_player()
         elif self.game.match in self.game.modes and self.game.immediateRestart:
             self.game.sound.stop(self.game.assets.sfx_ragtimePiano)
@@ -419,7 +416,10 @@ class BaseGameMode(ep.EP_Mode):
 
             # Ensure all lamps are off.
             for lamp in self.game.lamps:
-                lamp.disable()
+                if lamp.name == 'startButton':
+                    pass
+                else:
+					lamp.disable()
 
             #play sound
             self.stop_music()
@@ -484,7 +484,7 @@ class BaseGameMode(ep.EP_Mode):
         # if there's a running quickdraw or showdown - pass
         elif not self.guns_allowed():
             pass
-            ##print "PASSING - Guns disabled"
+            #print "PASSING - Guns disabled"
             #print self.game.show_tracking('stackLevel')
         # Everything beyond this point only registers if there's no other mode running - so no stack checking is needed
         # move your train
@@ -521,10 +521,10 @@ class BaseGameMode(ep.EP_Mode):
         # this is for turning the guns back on if the conditions are good
         if True in self.game.show_tracking('stackLevel') or self.game.skill_shot.super or self.game.bart.bossFight:
         # if any stack level is active, new gunfight action is not allowed
-            ##print "Guns not allowed right now"
+            #print "Guns not allowed right now"
             return False
         else:
-            ##print "Guns allowed right now"
+            #print "Guns allowed right now"
             return True
 
 
@@ -680,7 +680,7 @@ class BaseGameMode(ep.EP_Mode):
     def sw_flipperLwL_active(self,sw):
         # if both flippers are hit, kill the bonus
         if self.game.switches.flipperLwR.is_active():
-            ##print "Both flippers pressed"
+            #print "Both flippers pressed"
             self.dub_flip()
         # if no balls in play, don't do anything else.
         if self.game.trough.num_balls_in_play == 0:
@@ -857,7 +857,7 @@ class BaseGameMode(ep.EP_Mode):
               stat == "READY" or  \
               stat == position or \
               self.game.show_tracking('bionicStatus') == "RUNNING":
-                ##print "QUICKDRAW IS RUNNING OR LIT"
+                #print "QUICKDRAW IS RUNNING OR LIT"
                 # register a lit hit
                 self.quickdraw_lit_hit()
             # otherwise quickdraw is NOT running or LIT

@@ -127,7 +127,7 @@ class CCGame(game.BasicGame):
         self.multiplier = 1
 
         # software version number
-        self.revision = "2015.08.03"
+        self.revision = "2016.03.15"
 
         # basic game reset stuff, copied in
         # load up the game data Game data
@@ -518,9 +518,14 @@ class CCGame(game.BasicGame):
         # turn off all the ligths
         for lamp in self.lamps:
             if 'gi' not in lamp.name:
-                lamp.disable()
+                if lamp.name == 'startButton':
+                    pass
+                else:
+					lamp.disable()
         # run the start ball from parent
         super(CCGame,self).start_game()
+        # make the start button solid
+        self.lamps.startButton.enable()
         # Add the first player
         self.add_player()
         # set the number for the hits to the beer mug to start drunk multiball
@@ -680,7 +685,7 @@ class CCGame(game.BasicGame):
                     if getattr(mode, "clear_layer", None):
                         mode.clear_layer()
                 # this is a  duplication - base handles it?
-                ##print "BALL DRAINED IS KILLING THE MUSIC"
+                #print "BALL DRAINED IS KILLING THE MUSIC"
                 #self.sound.stop_music()
 
             ## and tell all the modes the ball drained no matter what
@@ -1089,7 +1094,7 @@ class CCGame(game.BasicGame):
     def enable_flippers(self, enable):
         """Enables or disables the flippers AND bumpers."""
         if self.party_setting == "Drunk":
-            self.enable_inverted_flippers(True)
+            self.enable_inverted_flippers(enable)
         else:
             for flipper in self.config['PRFlippers']:
                 self.logger.info("Programming flipper %s", flipper)
@@ -1293,27 +1298,27 @@ class CCGame(game.BasicGame):
     def volume_up(self):
         """ """
         if not self.sound.enabled: return
-        ##print "Current Volume: " + str(self.sound.volume)
+        #print "Current Volume: " + str(self.sound.volume)
         setting = self.user_settings['Sound']['Initial volume']
         if setting <= 9:
             setting += 1
-            ##print "new math value: " + str(self.sound.volume)
+            #print "new math value: " + str(self.sound.volume)
             self.sound.set_volume(setting / 10.0)
-            ##print "10 value: " + str(self.sound.volume*10)
-            ##print "Int value: " + str(int(self.sound.volume*10))
+            #print "10 value: " + str(self.sound.volume*10)
+            #print "Int value: " + str(int(self.sound.volume*10))
         return setting
 
     def volume_down(self):
         """ """
         if not self.sound.enabled: return
-        ##print "Current Volume: " + str(self.sound.volume)
+        #print "Current Volume: " + str(self.sound.volume)
         setting = self.user_settings['Sound']['Initial volume']
         if setting >= 2:
             setting -= 1
-            ##print "new math value: " + str(self.sound.volume)
+            #print "new math value: " + str(self.sound.volume)
             self.sound.set_volume(setting / 10.0)
-            ##print "10 value: " + str(self.sound.volume*10)
-            ##print "Int value: " + str(int(self.sound.volume*10))
+            #print "10 value: " + str(self.sound.volume*10)
+            #print "Int value: " + str(int(self.sound.volume*10))
         return setting
 
 

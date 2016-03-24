@@ -88,7 +88,7 @@ class SkillShot(ep.EP_Mode):
             self.change_prizes(-1)
             return game.SwitchStop
         elif self.super and self.game.switches.shooterLane.is_active() and self.game.user_settings['Gameplay (Feature)']['Super Cheat'] == 'Enabled':
-            ##print "Left flipper hit - super is active"
+            #print "Left flipper hit - super is active"
             if self.rcount == 5:
                 self.lcount += 1
                 if self.lcount == 2:
@@ -98,7 +98,7 @@ class SkillShot(ep.EP_Mode):
                 self.lcount = 0
             return game.SwitchStop
         else:
-            ##print "Left Flipper hit"
+            #print "Left Flipper hit"
             pass
 
     def sw_flipperLwR_active(self,sw):
@@ -106,11 +106,11 @@ class SkillShot(ep.EP_Mode):
             self.change_prizes(1)
             return game.SwitchStop
         elif self.super and self.game.switches.shooterLane.is_active() and self.game.user_settings['Gameplay (Feature)']['Super Cheat'] == 'Enabled':
-            ##print "right flipper hit - super is active"
+            #print "right flipper hit - super is active"
             self.rcount += 1
             return game.SwitchStop
         else:
-            ##print "right flipper hit"
+            #print "right flipper hit"
             pass
 
     def sw_shooterLane_inactive(self,sw):
@@ -403,28 +403,29 @@ class SkillShot(ep.EP_Mode):
     # if the ramp switch gets hit - shift the prizes over
     # take the last prize off the string and stick it back on the front
     def sw_skillBowl_active(self, sw):
-        ## if we're in super, the jackpot shot has to move
-        if self.super:
-            self.active += 1
-            # wrap back around after 3
-            if self.active == 5:
-                self.active = 1
-            self.super_update_lamps()
-            #print "ACTIVE SHOT IS: " + str(self.active)
-        ##
-        self.game.score(7250,bonus=True)
-        # slide the prize list over
-        self.game.sound.play(self.game.assets.sfx_skillShotWoosh)
-        # blink the flasher
-        self.game.coils.middleRightFlasher.pulse(20)
-        # shift the prizes over
-        self.shift_right()
-        # have to figure out some way to make this animate smoothly or something - this works for now
-        # catches the first five in one variable and then the next in another and drops the far right
-        # then builds a new target string with the new far right symbol at both ends, for shifting
-        prizeTemp1 = self.selectedPrizes[0:4]
-        prizeTemp2 = self.selectedPrizes[4:5]
-        self.selectedPrizes = prizeTemp2 + prizeTemp1 + prizeTemp2
+        if self.live:
+            ## if we're in super, the jackpot shot has to move
+            if self.super:
+                self.active += 1
+                # wrap back around after 3
+                if self.active == 5:
+                    self.active = 1
+                self.super_update_lamps()
+                #print "ACTIVE SHOT IS: " + str(self.active)
+            ##
+            self.game.score(7250,bonus=True)
+            # slide the prize list over
+            self.game.sound.play(self.game.assets.sfx_skillShotWoosh)
+            # blink the flasher
+            self.game.coils.middleRightFlasher.pulse(20)
+            # shift the prizes over
+            self.shift_right()
+            # have to figure out some way to make this animate smoothly or something - this works for now
+            # catches the first five in one variable and then the next in another and drops the far right
+            # then builds a new target string with the new far right symbol at both ends, for shifting
+            prizeTemp1 = self.selectedPrizes[0:4]
+            prizeTemp2 = self.selectedPrizes[4:5]
+            self.selectedPrizes = prizeTemp2 + prizeTemp1 + prizeTemp2
 
     # if the ramp bottom switch gets hit - award the prize and unload the mode
     def sw_rightRampBottom_active(self, sw):
@@ -699,9 +700,13 @@ class SkillShot(ep.EP_Mode):
             self.game.set_tracking("cvaStatus", "READY")
             self.super = False
             if switch == 3:
+                #if cva is hit on the mine, clear the skillshot display - backup for switches failing
+                #self.clear_layer()
                 self.game.mountain.busy = True
                 self.game.modes.add(self.game.cva)
                 self.game.cva.intro(entry = "mine")
+                # unload skillshot after 2 seconds
+                #self.delay(2,handler=self.unload)
                 return
 
         # marshall multiball
@@ -780,7 +785,7 @@ class SkillShot(ep.EP_Mode):
 
     def sw_flipperLwR_active_for_2s(self,sw):
         if self.game.switches.shooterLane.is_active():
-            if not self.super and not self.game.tournament:
+            if not self.super and not self.game.tournament and self.game.user_settings['Gameplay (Feature)']['Super Skill Shot'] == 'Enabled':
                 #print "RIGHT FLIPPER ACTIVATING SUPER AFTER 2 SEC"
                 self.activate_super()
 

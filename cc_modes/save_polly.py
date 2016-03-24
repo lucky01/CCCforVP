@@ -81,109 +81,141 @@ class SavePolly(ep.EP_Mode):
     def ball_drained(self):
         if self.game.trough.num_balls_in_play == 0:
             if self.game.show_tracking("centerRampStage") == 99:
-                self.game.base.busy = True
-                self.game.base.queued += 1
-                self.wipe_delays()
                 if not self.finishing_up:
+                    self.game.base.busy = True
+                    self.game.base.queued += 1
+                    self.wipe_delays()
                     self.polly_died()
-
+                else:
+                    self.game.base.busy = True
+                    self.game.base.queued += 1
 
     # bonus lanes pause save polly
     def sw_leftBonusLane_active(self,sw):
-        if not self.halted:
-            self.halt_train()
-        # if the train is already halted, cancel any pending resume delay
+        if self.finishing_up:
+            pass
         else:
-            self.cancel_delayed("Resume")
+            if not self.halted:
+                self.halt_train()
+            # if the train is already halted, cancel any pending resume delay
+            else:
+                self.cancel_delayed("Resume")
 
     def sw_rightBonusLane_active(self,sw):
-        if not self.halted:
-            self.halt_train()
-        # if the train is already halted, cancel any pending resume delay
+        if self.finishing_up:
+            pass
         else:
-            self.cancel_delayed("Resume")
+            if not self.halted:
+                self.halt_train()
+            # if the train is already halted, cancel any pending resume delay
+            else:
+                self.cancel_delayed("Resume")
 
     # bumpers pause quickdraw
     def sw_leftJetBumper_active(self,sw):
-        if not self.halted:
-            self.halt_train()
-        # if the train is already halted, cancel any pending resume delay
+        if self.finishing_up:
+            pass
         else:
-            self.cancel_delayed("Resume")
+            if not self.halted:
+                self.halt_train()
+            # if the train is already halted, cancel any pending resume delay
+            else:
+                self.cancel_delayed("Resume")
 
     def sw_rightJetBumper_active(self,sw):
-        if not self.halted:
-            self.halt_train()
-        # if the train is already halted, cancel any pending resume delay
+        if self.finishing_up:
+            pass
         else:
-            self.cancel_delayed("Resume")
+            if not self.halted:
+                self.halt_train()
+            # if the train is already halted, cancel any pending resume delay
+            else:
+                self.cancel_delayed("Resume")
 
     def sw_bottomJetBumper_active(self,sw):
-        if not self.halted:
-            self.halt_train()
-        # if the train is already halted, cancel any pending resume delay
+        if self.finishing_up:
+            pass
         else:
-            self.cancel_delayed("Resume")
+            if not self.halted:
+                self.halt_train()
+            # if the train is already halted, cancel any pending resume delay
+            else:
+                self.cancel_delayed("Resume")
 
     # so does the mine and both pass the 'advanced' flag to avoid moo sounds
     def sw_minePopper_active_for_350ms(self,sw):
         #print "TTTT Mine Popper Register"
-        if not self.halted:
-            self.halt_train()
-        # if the train is already halted, cancel any pending resume delay
+        if self.finishing_up:
+            pass
         else:
-            self.cancel_delayed("Resume")
+            if not self.halted:
+                self.halt_train()
+            # if the train is already halted, cancel any pending resume delay
+            else:
+                self.cancel_delayed("Resume")
 
     def sw_saloonPopper_active_for_250ms(self,sw):
         #print "TTTT Saloon Popper Register"
-        if not self.halted:
-            self.halt_train()
-        # if the train is already halted, cancel any pending resume delay
+        if self.finishing_up:
+            pass
         else:
-            self.cancel_delayed("Resume")
+            if not self.halted:
+                self.halt_train()
+            # if the train is already halted, cancel any pending resume delay
+            else:
+                self.cancel_delayed("Resume")
 
     def sw_saloonPopper_inactive(self,sw):
-        if self.running and self.halted:
+        if self.running and self.halted and not self.finishing_up:
             self.halted = False
             self.delay("Resume",delay=1,handler=self.in_progress)
 
     # resume when exit
     def sw_jetBumpersExit_active(self,sw):
-        if self.running and self.halted:
+        if self.running and self.halted and not self.finishing_up:
             # kill the halt flag
             self.halted = False
             self.delay("Resume",delay=1,handler=self.in_progress)
 
     def sw_centerRampMake_active(self,sw):
-        # kill the mode timer until x
-        self.cancel_delayed("Mode Timer")
-        self.cancel_delayed("Pause Timer")
-        if self.running and not self.won:
-            # score points
-            self.game.score(self.shotValue)
-            # center ramp pauses the train
-            self.game.sound.play(self.game.assets.sfx_trainWhistle)
-            self.pause_train()
+        if self.finishing_up:
+            pass
+        else:
+            # kill the mode timer until x
+            self.cancel_delayed("Mode Timer")
+            self.cancel_delayed("Pause Timer")
+            if self.running and not self.won:
+                # score points
+                self.game.score(self.shotValue)
+                # center ramp pauses the train
+                self.game.sound.play(self.game.assets.sfx_trainWhistle)
+                self.pause_train()
 
     def sw_leftRampEnter_active(self,sw):
-        # kill the mode timer until x
-        self.cancel_delayed("Mode Timer")
-        self.cancel_delayed("Pause Timer")
-        if self.running and not self.won:
-            # score points
-            self.game.score(self.shotValue)
-            self.game.sound.play(self.game.assets.sfx_trainWhistle)
-            self.advance_save_polly()
+        if self.finishing_up:
+            pass
+        else:
+            # kill the mode timer until x
+            self.cancel_delayed("Mode Timer")
+            self.cancel_delayed("Pause Timer")
+            if self.running and not self.won:
+                # score points
+                self.game.score(self.shotValue)
+                self.game.sound.play(self.game.assets.sfx_trainWhistle)
+                self.advance_save_polly()
 
     def sw_rightRampMake_active(self,sw):
-        # kill the mode timer until x
-        self.cancel_delayed("Mode Timer")
-        self.cancel_delayed("Pause Timer")
-        if self.running and not self.won:
-            # score points
-            self.game.score(self.shotValue)
-            self.game.sound.play(self.game.assets.sfx_trainWhistle)
-            self.advance_save_polly()
+        if self.finishing_up:
+            pass
+        else:
+            # kill the mode timer until x
+            self.cancel_delayed("Mode Timer")
+            self.cancel_delayed("Pause Timer")
+            if self.running and not self.won:
+                # score points
+                self.game.score(self.shotValue)
+                self.game.sound.play(self.game.assets.sfx_trainWhistle)
+                self.advance_save_polly()
 
     def start_save_polly(self,step=1):
         if step == 1:
@@ -443,7 +475,7 @@ class SavePolly(ep.EP_Mode):
                 myWait = len(anim.frames) / 10.0
                 self.layer = animLayer
                 self.game.sound.play(self.game.assets.sfx_trainChugShort)
-                self.delay("Display",delay=myWait,handler=self.polly_died,param=2)
+                self.delay(delay=myWait,handler=self.polly_died,param=2)
             # if not, just move on to polly finished
             else:
                 #self.stop_music(slice=3)
@@ -456,18 +488,19 @@ class SavePolly(ep.EP_Mode):
                 self.delay("Operational",delay=1.5,handler=self.polly_finished)
         if step == 2:
             #self.stop_music(slice=3)
-            backdrop = dmd.FrameLayer(opaque=True, frame=self.game.assets.dmd_pollyMurder.frames[7])
-            awardTextTop = dmd.TextLayer(128/2,3,self.game.assets.font_5px_bold_AZ_outline,justify="center",opaque=False)
-            awardTextBottom = dmd.TextLayer(128/2,11,self.game.assets.font_15px_az_outline,justify="center",opaque=False)
-            awardTextBottom.composite_op = "blacksrc"
-            awardTextTop.composite_op = "blacksrc"
-            awardTextTop.set_text("POLLY")
-            awardTextBottom.set_text("DIED")
-            combined = dmd.GroupedLayer(128,32,[backdrop,awardTextTop,awardTextBottom])
-            self.layer = combined
-            duration = self.game.sound.play(self.game.assets.sfx_glumRiff)
-            self.delay("Display",delay=duration,handler=self.clear_layer)
-            self.delay("Operational",delay=duration,handler=self.polly_finished)
+            if self.running:
+                backdrop = dmd.FrameLayer(opaque=True, frame=self.game.assets.dmd_pollyMurder.frames[7])
+                awardTextTop = dmd.TextLayer(128/2,3,self.game.assets.font_5px_bold_AZ_outline,justify="center",opaque=False)
+                awardTextBottom = dmd.TextLayer(128/2,11,self.game.assets.font_15px_az_outline,justify="center",opaque=False)
+                awardTextBottom.composite_op = "blacksrc"
+                awardTextTop.composite_op = "blacksrc"
+                awardTextTop.set_text("POLLY")
+                awardTextBottom.set_text("DIED")
+                combined = dmd.GroupedLayer(128,32,[backdrop,awardTextTop,awardTextBottom])
+                self.layer = combined
+                duration = self.game.sound.play(self.game.assets.sfx_glumRiff)
+                self.delay("Display",delay=duration,handler=self.clear_layer)
+                self.delay("Operational",delay=duration,handler=self.polly_finished)
 
     def polly_finished(self):
         self.running = False
