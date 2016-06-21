@@ -352,8 +352,10 @@ class EP_Desktop():
     def setup_window(self):
         os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (self.xOffset,self.yOffset)
         pygame.init()
-        #print "Making window - " + str(self.pixel_size*128) + " by " + str(self.pixel_size*32) + " offsets " + str(self.xOffset) + "," + str(self.yOffset)
-        self.screen = pygame.display.set_mode(((self.pixel_size*128),(self.pixel_size*32)),pygame.NOFRAME)
+                    
+        SetWindowPos = ctypes.windll.user32.SetWindowPos
+        self.screen = pygame.display.set_mode(((self.pixel_size*128),(self.pixel_size*32)),pygame.NOFRAME)        
+        SetWindowPos(pygame.display.get_wm_info()['window'], -1, self.xOffset, self.yOffset, 0, 0, 0x0001)
         pygame.mouse.set_visible(False)
         pygame.display.set_caption('Cactus Canyon Continued')
 
