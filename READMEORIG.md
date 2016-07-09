@@ -1,3 +1,9 @@
+Cactus Canyon Continued
+=======================
+
+A P-ROC Project.  Written by an amateur.  Seriously, this is the first OOP I've ever
+done, so my code is probably garbage.  Try not to laugh.
+
 This is built on the shoulders of giants
 ========================================
 
