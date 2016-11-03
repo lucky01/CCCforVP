@@ -62,7 +62,7 @@ class Showdown(ep.EP_Mode):
         self.game.game_data['Feature']['Showdown Started'] += 1
         # raise the post to hold the ball
         self.activeSide = side
-        #self.posts[self.activeSide].enable()
+        #self.posts[self.activeSide].patter(on_time=2,off_time=6,original_on_time=30)
 
         # set the layer tracking
         self.game.stack_level(1,True)
@@ -298,6 +298,8 @@ class Showdown(ep.EP_Mode):
     def end_showdown(self):
         # drop all teh targets
         self.game.bad_guys.drop_targets()
+        # turn off the level 1 flag
+        self.game.stack_level(1,False)
         # kill the music - if nothing else is running
         # start up the main theme again if a higher level mode isn't running
         #self.stop_music(slice=2)
@@ -312,8 +314,6 @@ class Showdown(ep.EP_Mode):
         # start up the main theme again if a higher level mode isn't running
         if self.game.trough.num_balls_in_play > 0:
             self.music_on(self.game.assets.music_mainTheme,mySlice=2)
-        # turn off the level 1 flag
-        self.game.stack_level(1,False)
         # setup a display frame
         backdrop = dmd.FrameLayer(opaque=False, frame=self.game.assets.dmd_singleCowboySidewaysBorder.frames[0])
         textLine1 = ep.EP_TextLayer(74, 1, self.game.assets.font_7px_bold_az, "center", opaque=False)
