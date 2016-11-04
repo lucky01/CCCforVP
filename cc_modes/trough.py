@@ -243,7 +243,7 @@ class Trough(ep.EP_Mode):
             # and the eject switch hasn't triggered, we'll assume the launch worked
             #if not self.game.fakePinProc:
                 #print "Trough - scheduling the Bounce_Delay"
-                self.delay("Bounce_Delay",delay=3,handler=self.finish_launch)
+            self.delay("Bounce_Delay",delay=3,handler=self.finish_launch)
             # if we are under fakepinproc, proceed immediately to ball in play
             #else:
                 #print "Fakepinproc - Finishing Launch"
