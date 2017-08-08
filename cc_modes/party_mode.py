@@ -217,4 +217,4 @@ class PartyMode(ep.EP_Mode):
     # default tilt action is just to unload - this is here so it can be redefined
     # in each mode if something extra is needed
         #print "Tilted: " + self.myID
-	pass
+        pass

@@ -1282,7 +1282,7 @@ class CCGame(game.BasicGame):
             else:
                 # print str(caller) + " restarting current song"
                 # then start it up
-		 pass
+                pass
             self.sound.play_music(self.current_music, loops=-1)
 
 
@@ -1488,11 +1488,11 @@ class CCGame(game.BasicGame):
             index = 8
         return index
 
-	def main():
-    try:
-        game = CCGame()
-        game.run_loop()
-    finally:
-        del game
+    def main():
+        try:
+            game = CCGame()
+            game.run_loop()
+        finally:
+            del game
 
 if __name__ == '__main__': main()
