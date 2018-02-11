@@ -1315,7 +1315,7 @@ class NewServiceModeSettingsEditor(NewServiceSkeleton):
         self.game.sound.play(self.game.assets.sfx_menuUp)
         if self.state == 'nav':
             self.index += 1
-            ##print "Up - Index size: " + str(len(self.items)) + " - Current index: " + str(self.index)
+            #print "Up - Index size: " + str(len(self.items)) + " - Current index: " + str(self.index)
             # if we get too high, go to zero
             if self.index >= len(self.items):
                 self.index = 0
@@ -1336,7 +1336,7 @@ class NewServiceModeSettingsEditor(NewServiceSkeleton):
         self.game.sound.play(self.game.assets.sfx_menuDown)
         if self.state == 'nav':
             self.index -= 1
-            ##print "Down - Index size: " + str(len(self.items)) + " - Current index: " + str(self.index)
+            #print "Down - Index size: " + str(len(self.items)) + " - Current index: " + str(self.index)
             # if we get below zero, loop around
             if self.index < 0:
                 self.index = (len(self.items) - 1)
@@ -1465,9 +1465,9 @@ class NewServiceModeStatsDisplay(NewServiceSkeleton):
         # go through the audits and store the names and values
         for item in sorted(itemlist.iterkeys()):
             self.section.append(str(item).upper())
-            ##print "Item: " + str(item)
+            #print "Item: " + str(item)
             self.values.append(str(itemlist[item]))
-            ##print "Value: " + str(itemlist[item])
+            #print "Value: " + str(itemlist[item])
         self.update_display(self.title,self.section[self.index],self.values[self.index])
 
     def sw_enter_active(self,sw):
@@ -1678,7 +1678,7 @@ class NewServiceModeUpdate(NewServiceSkeleton):
             # if enter is pressed, copy the files
             # update the layer to say copying files
             self.selectionLine.set_text("COPYING FILES")
-            self.infoLine.set_text("DO NOT POWER OFF",blink_frames=15)
+            self.infoLine.set_text("DO NOT POWER OFF")
             self.delay(delay=1,handler=self.copy_files)
         else:
             self.game.sound.play(self.game.assets.sfx_menuReject)

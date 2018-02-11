@@ -77,18 +77,18 @@ class BallSearch(ep.EP_Mode):
                 state_str = str(self.stop_switches[switch])
                 m = getattr(sw, 'is_%s' % (state_str))
                 if m():
-                    ##print "BALL SEARCH NULL - BALL ON STOP SWITCH"
+                    #print "BALL SEARCH NULL - BALL ON STOP SWITCH"
                     schedule_search = 0
-                    ##print "Rescheduling a check in 2 seconds"
+                    #print "Rescheduling a check in 2 seconds"
                     self.delay("stoppedReset",delay=2,handler=self.reset,param="Ding")
 
             if schedule_search:
                 self.cancel_delayed(name='ball_search_countdown')
-                ##print "BALL SEARCH: Scheduling new countdown"
+                #print "BALL SEARCH: Scheduling new countdown"
                 self.delay(name='ball_search_countdown', event_type=None, delay=self.countdown_time, handler=self.perform_search, param=0)
 
     def stop(self,sw):
-        ##print "Ball Search - Stop Switch"
+        #print "Ball Search - Stop Switch"
         self.cancel_delayed(name='ball_search_countdown')
         # delay a reset call - so it will restart after a stop switch
         self.delay("stoppedReset",delay=2,handler=self.reset,param="Ding")
@@ -112,7 +112,7 @@ class BallSearch(ep.EP_Mode):
         self.delay(name='start_special_handler_modes', event_type=None, delay=delay, handler=self.start_special_handler_modes)
 
         # shake bart around
-        self.game.bart.hardMove()
+        self.game.bart.searchMove()
 
         # home the mountain
         self.game.mountain.reset_toy(True)
