@@ -335,7 +335,7 @@ class ModeQueue(object):
 		# Sort by priority, descending:
 		self.modes.sort(lambda x, y: y.priority - x.priority)
 		self.changed = True
-		self.logger.info("Added %s.", str(mode))
+		#self.logger.info("Added %s.", str(mode))
 		mode.mode_started()
 		if mode == self.modes[0]:
 			mode.mode_topmost()
@@ -345,7 +345,7 @@ class ModeQueue(object):
 			if m == mode:
 				del self.modes[idx]
 				self.changed = True
-				self.logger.info("Removed %s.", str(mode))
+				#self.logger.info("Removed %s.", str(mode))
 				mode.mode_stopped()
 				break
 		if len(self.modes) > 0:
@@ -388,8 +388,8 @@ class ModeQueue(object):
 			else:
 				log_rows.append([str(mode.priority), type(mode).__name__, '-'])
 		
-		for line in tabularize(log_rows):
-			self.logger.log(log_level, '  '+line)
+		#for line in tabularize(log_rows):
+			#self.logger.log(log_level, '  '+line)
 
 def tabularize(rows, col_spacing=2):
 	"""*rows* should be a list of lists of strings: [[r1c1, r1c2], [r2c1, r2c2], ..].

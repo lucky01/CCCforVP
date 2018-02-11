@@ -515,7 +515,7 @@ class GameController(object):
 
 			if sw.state != recvd_state:
 				sw.set_state(recvd_state)
-				self.logger.info("%s:\t%s\t(%s)", sw.name, sw.state_str(),event_type)
+				#self.logger.info("%s:\t%s\t(%s)", sw.name, sw.state_str(),event_type)
 				self.modes.handle_event(event)
 				sw.reset_timer()
 			else:
@@ -567,7 +567,7 @@ class GameController(object):
 					self.proc.watchdog_tickle()
 					self.proc.flush()
 				if self.modes.changed:
-					self.modes.logger.info("Modes changed in last run loop cycle, now:")
+					#self.modes.logger.info("Modes changed in last run loop cycle, now:")
 					self.modes.log_queue()
 					self.modes.changed = False
 				
