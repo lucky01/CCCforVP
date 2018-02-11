@@ -46,7 +46,7 @@ Gameplay (Feature): {2X Scoring Feature: Enabled, 2X Scoring Hits: 2, 2X Scoring
   Super Skill Shot: Enabled, Tournament Mode: Enabled, Tribute Mode: Enabled, Tribute Selecting: Manual,
   Tumbleweeds for CVA: 3, Tumbleweeds for CVA Boost: 3}
 Machine (Standard): {Autoplunger Strength: 45, Balls Per Game: 3, Color Display Dot Style: GRID,
-  Color Display Pixel Size: 8, Color Display X Offset: 2375, Color Display Y Offset: 825,
+  Color Display Pixel Size: 4, Color Display X Offset: 4, Color Display Y Offset: 4,
   Drop Target Boost: 25, Flipper Pulse: 34, Game Restart: true, Inactive Switch Warning: 0,
   Match Percentage: 10, Max Initials Length: 3, Maximum Extra Balls: 2, Mine Kicker Strength: 20,
   Real Knocker Installed: 'Yes', Real Knocker Strength: 20, Replay Auto Adjust: 'Yes',
