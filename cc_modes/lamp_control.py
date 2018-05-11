@@ -439,10 +439,10 @@ class LampControl(ep.EP_Mode):
         elif mode == "Stampede":
             ## left loop is #0 in the stampede jackpot list
             if self.game.stampede.active == 0:
-                        self.game.lamps.leftLoopJackpot.schedule(0xF000F000)
-                        self.game.lamps.leftLoopRideEm.schedule(0x0F000F00)
-                        self.game.lamps.leftLoopWildRide.schedule(0x00F000F0)
-                        self.game.lamps.leftLoopBuckNBronco.schedule(0x000F000F)
+                self.game.lamps.leftLoopJackpot.schedule(0xF000F000)
+                self.game.lamps.leftLoopRideEm.schedule(0x0F000F00)
+                self.game.lamps.leftLoopWildRide.schedule(0x00F000F0)
+                self.game.lamps.leftLoopBuckNBronco.schedule(0x000F000F)
             # if not active, just turn on the jackpot light only
             else:
                 self.game.lamps.leftLoopJackpot.schedule(0xFF00FF00)
@@ -546,10 +546,10 @@ class LampControl(ep.EP_Mode):
 
         elif mode == "Stampede":
             if self.game.stampede.active == 1:
-                        self.game.lamps.leftRampJackpot.schedule(0xF000F000)
-                        self.game.lamps.leftRampSavePolly.schedule(0x0F000F00)
-                        self.game.lamps.leftRampWaterfall.schedule(0x00F000F0)
-                        self.game.lamps.leftRampWhiteWater.schedule(0x000F000F)
+                self.game.lamps.leftRampJackpot.schedule(0xF000F000)
+                self.game.lamps.leftRampSavePolly.schedule(0x0F000F00)
+                self.game.lamps.leftRampWaterfall.schedule(0x00F000F0)
+                self.game.lamps.leftRampWhiteWater.schedule(0x000F000F)
             # if not active, just turn on the jackpot light only
             else:
                 self.game.lamps.leftRampJackpot.schedule(0xFF00FF00)
@@ -560,6 +560,7 @@ class LampControl(ep.EP_Mode):
             if self.game.bank_robbery.running:
                 if not self.game.bank_robbery.isActive[0]:
                     return
+            self.game.lamps.leftRampJackpot.enable()
             self.game.lamps.leftRampSavePolly.schedule(0x0FF00FF0)
             self.game.lamps.leftRampWaterfall.schedule(0x00FF00FF)
             self.game.lamps.leftRampWhiteWater.schedule(0xF00FF00F)
@@ -660,25 +661,28 @@ class LampControl(ep.EP_Mode):
         elif mode == "Stampede":
         ## center ramp is #2 in the stampede jackpot list
             if self.game.stampede.active == 2:
-                        self.game.lamps.centerRampJackpot.schedule(0xF000F000)
-                        self.game.lamps.centerRampSavePolly.schedule(0x0F000F00)
-                        self.game.lamps.centerRampStopTrain.schedule(0x00F000F0)
-                        self.game.lamps.centerRampCatchTrain.schedule(0x000F000F)
+                self.game.lamps.centerRampJackpot.schedule(0xF000F000)
+                self.game.lamps.centerRampSavePolly.schedule(0x0F000F00)
+                self.game.lamps.centerRampStopTrain.schedule(0x00F000F0)
+                self.game.lamps.centerRampCatchTrain.schedule(0x000F000F)
             # if not active, just turn on the jackpot light only
             else:
                 self.game.lamps.centerRampJackpot.schedule(0xFF00FF00)
 
         elif mode == "Polly":
             if self.game.river_chase.running:
+                self.game.lamps.centerRampJackpot.enable()
                 self.game.lamps.centerRampSavePolly.schedule(0x0FF00FF0)
                 self.game.lamps.centerRampStopTrain.schedule(0x00FF00FF)
                 self.game.lamps.centerRampCatchTrain.schedule(0xF00FF00F)
             elif self.game.bank_robbery.running:
                 if self.game.bank_robbery.isActive[1]:
+                    self.game.lamps.centerRampJackpot.enable()
                     self.game.lamps.centerRampSavePolly.schedule(0x0FF00FF0)
                     self.game.lamps.centerRampStopTrain.schedule(0x00FF00FF)
                     self.game.lamps.centerRampCatchTrain.schedule(0xF00FF00F)
             else:
+                self.game.lamps.centerRampJackpot.enable()
                 self.game.lamps.centerRampSavePolly.schedule(0x00FFFF00)
                 self.game.lamps.centerRampStopTrain.schedule(0x0000FFFF)
                 self.game.lamps.centerRampCatchTrain.schedule(0xFF0000FF)
@@ -784,10 +788,10 @@ class LampControl(ep.EP_Mode):
         elif mode == "Stampede":
             ## right loop is #3 in the stampede jackpot list
             if self.game.stampede.active == 3:
-                        self.game.lamps.rightLoopJackpot.schedule(0xF000F000)
-                        self.game.lamps.rightLoopMarksman.schedule(0x0F000F00)
-                        self.game.lamps.rightLoopGunslinger.schedule(0x00F000F0)
-                        self.game.lamps.rightLoopGoodShot.schedule(0x000F000F)
+                self.game.lamps.rightLoopJackpot.schedule(0xF000F000)
+                self.game.lamps.rightLoopMarksman.schedule(0x0F000F00)
+                self.game.lamps.rightLoopGunslinger.schedule(0x00F000F0)
+                self.game.lamps.rightLoopGoodShot.schedule(0x000F000F)
             # if not active, just turn on the jackpot light only
             else:
                 self.game.lamps.rightLoopJackpot.schedule(0xFF00FF00)
@@ -890,10 +894,10 @@ class LampControl(ep.EP_Mode):
         elif mode == "Stampede":
         ## right ramp is #4 in the stampede jackpot list
             if self.game.stampede.active == 4:
-                        self.game.lamps.rightRampJackpot.schedule(0xF000F000)
-                        self.game.lamps.rightRampSavePolly.schedule(0x0F000F00)
-                        self.game.lamps.rightRampShootOut.schedule(0x00F000F0)
-                        self.game.lamps.rightRampSoundAlarm.schedule(0x000F000F)
+                self.game.lamps.rightRampJackpot.schedule(0xF000F000)
+                self.game.lamps.rightRampSavePolly.schedule(0x0F000F00)
+                self.game.lamps.rightRampShootOut.schedule(0x00F000F0)
+                self.game.lamps.rightRampSoundAlarm.schedule(0x000F000F)
             # if not active, just turn on the jackpot light only
             else:
                 self.game.lamps.rightRampJackpot.schedule(0xFF00FF00)
@@ -903,6 +907,7 @@ class LampControl(ep.EP_Mode):
             if self.game.bank_robbery.running:
                 if not self.game.bank_robbery.isActive[2]:
                     return
+            self.game.lamps.rightRampJackpot.enable()
             self.game.lamps.rightRampSavePolly.schedule(0x0FF00FF0)
             self.game.lamps.rightRampShootOut.schedule(0x00FF00FF)
             self.game.lamps.rightRampSoundAlarm.schedule(0xF00FF00F)
