@@ -455,6 +455,10 @@ PRCoils:
         number: C28
         label: Back Left - Red
         tags: Flasher
+    solGameOn:
+        number: C39
+        label: GameOn
+        tags: Solenoid
     trainReverse:
         number: C37
         label: Train Motor - Reverse
