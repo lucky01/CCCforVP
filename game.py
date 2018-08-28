@@ -1106,6 +1106,7 @@ class CCGame(game.BasicGame):
         """Enables or disables the flippers AND bumpers."""
         if self.party_setting == "Drunk":
             self.enable_inverted_flippers(enable)
+            self.coils.solGameOn.disable()
         else:
             for flipper in self.config['PRFlippers']:
                 self.logger.info("Programming flipper %s", flipper)
@@ -1116,6 +1117,7 @@ class CCGame(game.BasicGame):
 
                 drivers = []
                 if enable:
+                    self.coils.solGameOn.enable()
                     if self.party_setting == "Newbie":
                         # if we're on newbie, turn all the flippers on per button
                         for flipper in self.config['PRFlippers']:
@@ -1150,7 +1152,7 @@ class CCGame(game.BasicGame):
                 self.proc.switch_update_rule(switch_num, state2, {'notifyHost':False, 'reloadActive':False}, drivers, len(drivers) > 0)
 
                 if not enable:
-
+                    self.coils.solGameOn.disable() 
                     main_coil.disable()
                     hold_coil.disable()
 
