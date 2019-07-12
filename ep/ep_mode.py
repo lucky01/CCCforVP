@@ -84,6 +84,7 @@ class EP_Mode(object):
         self.running = False
         self.queued = 0
         self.myID = "Unknown"
+        self.layer = None
 
     def __scan_switch_handlers(self):
         # Format: sw_popperL_open_for_200ms(self, sw):
@@ -206,7 +207,7 @@ class EP_Mode(object):
 
     def cancel_delayed(self, name):
         """Removes the given named delays from the delayed list, cancelling their execution."""
-        ##print "Cancelling Delayed: " + str(name)
+        #print "Cancelling Delayed: " + str(name)
         if type(name) == list:
             for n in name:
                 self.cancel_delayed(n)
@@ -329,13 +330,14 @@ class EP_Mode(object):
 
     # wait for busy to be over routine
     def wait_until_unbusy(self,myHandler):
-        ##print "BUSY LOOP WAIT - BUSY IS " + str(self.busy)
+        #print "BUSY LOOP WAIT - BUSY IS " + str(self.busy)
         if not self.busy:
             #print myHandler
             myHandler()
         else:
-            ##print "BUSY LOOP - SETTING A NEW DELAY"
-            self.delay(delay=0.1,handler=self.wait_until_unbusy,param=myHandler)
+            self.cancel_delayed("Busy Loop")
+            #print "BUSY LOOP - SETTING A NEW DELAY"
+            self.delay("Busy Loop", delay=0.1, handler= self.wait_until_unbusy, param=myHandler)
 
     def wait_for_queue(self,myHandler):
     # if the queue is clear move ahead
@@ -345,7 +347,8 @@ class EP_Mode(object):
             # then do this thing
             myHandler()
         else:
-            self.delay(delay=0.5,handler=self.wait_for_queue,param=myHandler)
+            self.cancel_delayed("Queue Loop")
+            self.delay("Queue Loop", delay=0.5, handler=self.wait_for_queue, param=myHandler)
 
     # standard clear layer
     def clear_layer(self):
@@ -390,7 +393,8 @@ class EP_Mode(object):
                 self.game.music_on(caller=self.myID,slice=mySlice)
 
     def delayed_music_on(self,wait,song=None):
-        self.delay(delay=wait, handler=self.music_on,param=song)
+        self.cancel_delayed("Music On")
+        self.delay("Music On", delay=wait, handler=self.music_on, param=song)
 
     # if there's no layer, and it's wanted for a group, return a blank one
     def no_layer(self):

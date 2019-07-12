@@ -194,6 +194,7 @@ class Tracking(game.Player):
 
         # player earned replay
         self.player_stats['replay_earned'] = False
+        self.player_stats['replay_hint'] = False
 
         # bounty index for tournament mode
         self.player_stats['bountyIndex'] = 0
@@ -202,6 +203,7 @@ class Tracking(game.Player):
         self.player_stats['Total Flips'] = 0
         self.player_stats['Left Flips'] = 0
         self.player_stats['Right Flips'] = 0
+        self.player_stats['Flip Limit'] = 0
 
         # jackpot value for stampede
         self.player_stats['Stampede Value'] = 250000

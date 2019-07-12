@@ -560,10 +560,20 @@ class LampControl(ep.EP_Mode):
             if self.game.bank_robbery.running:
                 if not self.game.bank_robbery.isActive[0]:
                     return
-            self.game.lamps.leftRampJackpot.enable()
             self.game.lamps.leftRampSavePolly.schedule(0x0FF00FF0)
             self.game.lamps.leftRampWaterfall.schedule(0x00FF00FF)
             self.game.lamps.leftRampWhiteWater.schedule(0xF00FF00F)
+            # if the multiplier is on, blink the combo
+            #print "RIVER CHASE VALUE MULTIPLIER " + str(self.game.river_chase.valueMultiplier)
+            #print "BANK ROBBERY VALUE MULTIPLIER " + str(self.game.bank_robbery.valueMultiplier)
+            #print "TRAIN VALUE MULTIPLIER" + str(self.game.save_polly.valueMultiplier)
+            if self.game.bank_robbery.valueMultiplier > 1 or\
+               self.game.river_chase.valueMultiplier > 1 or\
+               self.game.save_polly.valueMultiplier > 1:
+                self.game.lamps.leftRampJackpot.schedule(0xCCCCCCCC)
+            else:
+                self.game.lamps.leftRampJackpot.enable()
+
 
         elif mode == "Disable":
             for lamp in self.game.lamps.items_tagged('leftRamp'):
@@ -671,16 +681,29 @@ class LampControl(ep.EP_Mode):
 
         elif mode == "Polly":
             if self.game.river_chase.running:
-                self.game.lamps.centerRampJackpot.enable()
                 self.game.lamps.centerRampSavePolly.schedule(0x0FF00FF0)
                 self.game.lamps.centerRampStopTrain.schedule(0x00FF00FF)
                 self.game.lamps.centerRampCatchTrain.schedule(0xF00FF00F)
+                # if the multiplier is on, blink the combo
+                if self.game.river_chase.valueMultiplier > 1:
+                    self.game.lamps.centerRampJackpot.schedule(0xCCCCCCCC)
+                else:
+                    self.game.lamps.centerRampJackpot.enable()
+
+
             elif self.game.bank_robbery.running:
                 if self.game.bank_robbery.isActive[1]:
                     self.game.lamps.centerRampJackpot.enable()
                     self.game.lamps.centerRampSavePolly.schedule(0x0FF00FF0)
                     self.game.lamps.centerRampStopTrain.schedule(0x00FF00FF)
                     self.game.lamps.centerRampCatchTrain.schedule(0xF00FF00F)
+                    # if the multiplier is on, blink the combo
+                    if self.game.bank_robbery.valueMultiplier > 1:
+                        self.game.lamps.centerRampJackpot.schedule(0xCCCCCCCC)
+                    else:
+                        self.game.lamps.centerRampJackpot.enable()
+
+
             else:
                 self.game.lamps.centerRampJackpot.enable()
                 self.game.lamps.centerRampSavePolly.schedule(0x00FFFF00)
@@ -907,10 +930,19 @@ class LampControl(ep.EP_Mode):
             if self.game.bank_robbery.running:
                 if not self.game.bank_robbery.isActive[2]:
                     return
-            self.game.lamps.rightRampJackpot.enable()
             self.game.lamps.rightRampSavePolly.schedule(0x0FF00FF0)
             self.game.lamps.rightRampShootOut.schedule(0x00FF00FF)
             self.game.lamps.rightRampSoundAlarm.schedule(0xF00FF00F)
+            # if the multiplier is on, blink the combo
+            if self.game.bank_robbery.valueMultiplier > 1 or \
+               self.game.river_chase.valueMultiplier > 1 or \
+               self.game.save_polly.valueMultiplier > 1:
+                #print "LAMP DOES IN FACT SEE THE MULTIPLIER"
+                self.game.lamps.rightRampJackpot.schedule(0xCCCCCCCC)
+            else:
+                #print "LAMP DOESNT SEE MULTIPLIER"
+                self.game.lamps.rightRampJackpot.enable()
+
 
         elif mode == "Disable":
             for lamp in self.game.lamps.items_tagged('rightRamp'):

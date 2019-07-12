@@ -75,7 +75,7 @@ class BadGuys(ep.EP_Mode):
 
     def sw_badGuySW0_inactive_for_200ms(self,sw):
         # allowance for running in fakepinproc
-        if self.pending[0]:
+        if not self.game.fakePinProc and self.pending[0]:
             self.pending[0] = False
             self.target_activate(0)
 
@@ -87,7 +87,7 @@ class BadGuys(ep.EP_Mode):
 
     def sw_badGuySW1_inactive_for_200ms(self,sw):
         # allowance for running in fakepinproc
-        if self.pending[1]:
+        if not self.game.fakePinProc and self.pending[1]:
             self.pending[1] = False
             self.target_activate(1)
 
@@ -99,7 +99,7 @@ class BadGuys(ep.EP_Mode):
 
     def sw_badGuySW2_inactive_for_200ms(self,sw):
         # allowance for running in fakepinproc
-        if self.pending[2]:
+        if not self.game.fakePinProc and self.pending[2]:
             self.pending[2] = False
             self.target_activate(2)
 
@@ -111,7 +111,7 @@ class BadGuys(ep.EP_Mode):
 
     def sw_badGuySW3_inactive_for_200ms(self,sw):
         # allowance for running in fakepinproc
-        if self.pending[3]:
+        if not self.game.fakePinProc and self.pending[3]:
             self.pending[3] = False
             self.target_activate(3)
 
