@@ -67,7 +67,7 @@ class Interrupter(ep.EP_Mode):
         # with an idle call, set a repeat
         if idle:
             self.idle = True
-            self.delay(name="idle",delay=10,handler=self.display_player_number,param=True)
+            self.delay(name="idle",delay=15,handler=self.display_player_number,param=True)
 
     def cancel_idle(self):
         self.idle = False
@@ -80,6 +80,16 @@ class Interrupter(ep.EP_Mode):
             self.idle = False
             self.layer = None
 
+    def score_overlay(self,points,multiplier,textColor):
+        # points is the shot value, multiplier is the active combo multiplier
+        textLayer = ep.EP_TextLayer(128/2, 24, self.game.assets.font_6px_az_inverse, "center", opaque=False)
+        string = "< " + str(ep.format_score(points))
+        if multiplier > 1:
+            string = string + " X " + str(multiplier)
+        string = string + " >"
+        textLayer.set_text(string,color=textColor)
+        self.layer = textLayer
+        self.delay("Display",delay=1.5,handler=self.clear_layer)
 
     def tilt_danger(self,status):
         self.cancel_delayed("Display")
@@ -412,7 +422,6 @@ class Interrupter(ep.EP_Mode):
             animLayer.frame_time = 6
             animLayer.opaque = True
             animLayer.add_frame_listener(2,self.game.sound.play,param=self.game.assets.sfx_lowBoom)
-            #animLayer.add_frame_listener(4,self.game.trough.launch_balls,param=1)
             # this flag tells the player intro quote to not play
             self.hush = True
             animLayer.add_frame_listener(4,self.game.ball_starting)
@@ -445,6 +454,11 @@ class Interrupter(ep.EP_Mode):
         # show the score layer for a second
         self.layer = self.game.score_display.layer
         self.delay(delay = 1,handler=self.clear_layer)
+
+    def show_player_scores(self):
+        self.layer = self.game.score_display.layer
+        self.cancel_delayed("clear score")
+        self.delay("clear score", delay=2, handler=self.clear_layer)
 
     # this for low priority modes to throw a display over something else that is running
     def cut_in(self,layer,timer):
@@ -642,8 +656,12 @@ class Interrupter(ep.EP_Mode):
 
     # replay score display
     def replay_score_display(self):
-        self.layer = self.replay_score_page()
-        self.delay(delay=1.5,handler=self.clear_layer)
+        # if the player hasn't already been shown the replay hint - show it
+        if not self.game.show_tracking('replay_hint'):
+            # set the hint tracking to true to prevent showing on extra balls
+            self.game.set_tracking('replay_hint', True)
+            self.layer = self.replay_score_page()
+            self.delay(delay=1.5,handler=self.clear_layer)
 
     def replay_score_page(self):
         replay_text = ep.format_score(self.game.user_settings['Machine (Standard)']['Replay Score'])

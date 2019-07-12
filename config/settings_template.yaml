@@ -345,7 +345,7 @@ Gameplay (Feature):
     default: 'Easy'
   'Showdown Difficulty':
     options: ['Easy','Hard']
-    default: 'Easy'
+    default: 'Hard'
   'Super Skill Shot':
     options: ['Enabled','Disabled']
     default: 'Enabled'
@@ -421,6 +421,10 @@ Gameplay (Feature):
   'Attract Mode Music':
     options: ['Yes','No']
     default: 'Yes'
+  'Pop Bumper Limit':
+    options: [0,10]
+    increments: 1
+    default: 5
 Custom Message:
   'Custom Message':
     options: ['Enabled','Disabled']

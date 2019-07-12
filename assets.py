@@ -29,7 +29,7 @@ class Assets():
 
         self.game = game
         color_desktop = self.game.color_desktop
-        #####print "Color Desktop Assets: " + str(color_desktop)
+        #print "Color Desktop Assets: " + str(color_desktop)
 
         # Paths
         self.lampshows_path = curr_file_path + "/lampshows/"
@@ -57,7 +57,7 @@ class Assets():
         self.font_6px_az = ep.ColorFont(self.dmd_path + "Font_19_CactusCanyon.dmd")
         self.font_6px_az.make_colors([ep.GREEN,ep.YELLOW,ep.RED,ep.DARK_RED,ep.MAGENTA,ep.ORANGE])
         self.font_6px_az_inverse = ep.ColorFont(self.dmd_path + "Font_Custom_6px.dmd")
-        self.font_6px_az_inverse.make_colors([ep.GREEN,ep.BROWN,ep.MAGENTA,ep.BLUE,ep.YELLOW,ep.RED,ep.ORANGE])
+        self.font_6px_az_inverse.make_colors([ep.GREEN,ep.BROWN,ep.MAGENTA,ep.BLUE,ep.YELLOW,ep.RED,ep.ORANGE,ep.PURPLE])
         self.font_6px_az_inverse.composite_op = "blacksrc"
 
         self.font_7px_alt_az = dmd.Font(self.dmd_path + "Font_1_CactusCanyon.dmd")
@@ -1006,6 +1006,24 @@ class Assets():
         self.game.sound.register_sound(self.quote_hatbIntro, self.quotes_path + "mayor-miss-pollys-in-there-sheriff.wav")
         self.game.sound.register_sound(self.quote_hatbIntro, self.quotes_path + "1307-undertaker-oh-good-mayhem-at-the-bank.wav")
 
+        self.quote_hatbDox = 'quote_hatbDox'
+        self.game.sound.register_sound(self.quote_hatbDox, self.quotes_path + "yokel_HATB_intro.wav")
+        self.game.sound.register_sound(self.quote_hatbDox, self.quotes_path + "yokel_HATB_now.wav")
+        self.game.sound.register_sound(self.quote_hatbDox, self.quotes_path + "yokel_HATB_only.wav")
+        self.game.sound.register_sound(self.quote_hatbDox, self.quotes_path + "yokel_HATB_presenting.wav")
+        self.game.sound.register_sound(self.quote_hatbDox, self.quotes_path + "yokel_HATB_time.wav")
+        self.quote_rotrDox = 'quote_rotrDox'
+        self.game.sound.register_sound(self.quote_rotrDox, self.quotes_path + "yokel_ROTR_intro.wav")
+        self.game.sound.register_sound(self.quote_rotrDox, self.quotes_path + "yokel_ROTR_now.wav")
+        self.game.sound.register_sound(self.quote_rotrDox, self.quotes_path + "yokel_ROTR_only.wav")
+        self.game.sound.register_sound(self.quote_rotrDox, self.quotes_path + "yokel_ROTR_presenting.wav")
+        self.game.sound.register_sound(self.quote_rotrDox, self.quotes_path + "yokel_ROTR_time.wav")
+        self.quote_ttttDox = 'quote_ttttDox'
+        self.game.sound.register_sound(self.quote_ttttDox, self.quotes_path + "yokel_TTTT_intro.wav")
+        self.game.sound.register_sound(self.quote_ttttDox, self.quotes_path + "yokel_TTTT_now.wav")
+        self.game.sound.register_sound(self.quote_ttttDox, self.quotes_path + "yokel_TTTT_only.wav")
+        self.game.sound.register_sound(self.quote_ttttDox, self.quotes_path + "yokel_TTTT_presenting.wav")
+        self.game.sound.register_sound(self.quote_ttttDox, self.quotes_path + "yokel_TTTT_time.wav")
 
         self.quote_mobStart = 'quote_mobStart'
         self.game.sound.register_sound(self.quote_mobStart, self.quotes_path + "1171-mayor-shoot-anything-that-pops-up.wav")
@@ -1480,6 +1498,9 @@ class Assets():
 
         self.music_party = 'music_party'
         self.game.sound.register_music(self.music_party, self.music_path + "party_select.wav")
+
+        self.music_beans = 'music_beans'
+        self.game.sound.register_music(self.music_beans, self.music_path + "yak_sax.wav")
 
 
         # lampshows

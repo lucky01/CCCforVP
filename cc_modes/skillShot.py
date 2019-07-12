@@ -76,6 +76,9 @@ class SkillShot(ep.EP_Mode):
         random.shuffle(self.keys_index['welcome'])
         random.shuffle(self.keys_index['super'])
 
+    def tilted(self):
+        # remove thyself if tilted
+        self.unload()
 
     def ball_drained(self):
         # if somehow all the balls go away and this crap is still running, it should unload. SRSLY.
@@ -83,7 +86,9 @@ class SkillShot(ep.EP_Mode):
             self.wipe_delays()
             self.unload()
 
-    def sw_flipperLwL_active(self,sw):
+    def sw_flipperLwL_active(self, sw):
+        if self.game.switches.flipperLwL.is_active():
+            self.dub_flip()
         if self.selecting and self.game.switches.shooterLane.is_active():
             self.change_prizes(-1)
             return game.SwitchStop
@@ -101,7 +106,9 @@ class SkillShot(ep.EP_Mode):
             #print "Left Flipper hit"
             pass
 
-    def sw_flipperLwR_active(self,sw):
+    def sw_flipperLwR_active(self, sw):
+        if self.game.switches.flipperLwR.is_active():
+            self.dub_flip()
         if self.selecting and self.game.switches.shooterLane.is_active():
             self.change_prizes(1)
             return game.SwitchStop
@@ -112,6 +119,9 @@ class SkillShot(ep.EP_Mode):
         else:
             #print "right flipper hit"
             pass
+
+    def dub_flip(self):
+        self.game.interrupter.show_player_scores()
 
     def sw_shooterLane_inactive(self,sw):
         # turn off selecting when the ball leaves the shooter lane
@@ -141,8 +151,8 @@ class SkillShot(ep.EP_Mode):
             # if we're on ball three and the player hasn't reached the replay score - show that
             if self.game.replays:
                 if self.game.ball == self.game.balls_per_game and not self.game.show_tracking('replay_earned'):
-                # on any ball other than ball one, announce which players turn it is if there is more than one
                     self.game.interrupter.replay_score_display()
+            # on any ball other than ball one, announce which players turn it is if there is more than one
             if len(self.game.players) > 1 and not self.game.interrupter.hush:
                 playerQuotes = [self.game.assets.quote_playerOne, self.game.assets.quote_playerTwo, self.game.assets.quote_playerThree, self.game.assets.quote_playerFour]
                 myDuration = self.game.sound.play(playerQuotes[self.game.current_player_index])
@@ -231,8 +241,13 @@ class SkillShot(ep.EP_Mode):
             if self.game.show_tracking('centerRampStage') < 3:
                 prizes.append("M")
 
-            # 1 million points (1M) is always available
-            prizes.append("N")
+            # 1 million points (1M) is always available - except for flip count
+            if self.game.party_setting == 'Flip Ct':
+                # add 100 grand prize
+                prizes.append("X")
+            else:
+                prizes.append("N")
+
             if self.game.user_settings['Gameplay (Feature)']['Franks N Beans'] == "Enabled" and not self.game.show_tracking('farted'):
                 prizes.append("W")
         # here's the super skill shot prizes
@@ -295,6 +310,18 @@ class SkillShot(ep.EP_Mode):
                     #print "Found " + prizes[item] + " taking out of rotation"
                     prizes.remove(prizes[item])
             count += 1
+
+        # if flip count is on, replace one award with the extra flips per ball
+        if self.game.party_setting == 'Flip Ct':
+            # pick a random spot for it
+            position = random.randrange(4)
+            # dict for which prize per ball
+            flip_prize = {1: "Y", 2: "Z", 3: "a"}
+            # insert the flip count prize at a random location
+            self.selectedPrizes = self.selectedPrizes.replace(self.selectedPrizes[position],
+                                                              flip_prize[self.game.ball],
+                                                              1)
+
         # Tournament bit! uses the same 5 prizes - and 100,000 place holders if item is lit/unavailable
         if self.game.tournament:
             self.selectedPrizes = ""
@@ -467,7 +494,7 @@ class SkillShot(ep.EP_Mode):
 
     def skillshot_award(self,switch=0):
         # stop the music
-        self.stop_music()
+        self.stop_music(slice=1)
         # play the sound
         if self.selectedPrizes[5:] == "V":
             self.music_on(self.game.assets.music_tribute)
@@ -734,6 +761,24 @@ class SkillShot(ep.EP_Mode):
             awardStringBottom = "BEANS"
             self.game.base.start_franks()
 
+        # flip count + 5
+        elif self.selectedPrizes[5:] == "Y":
+            awardStringTop = "FIVE EXTRA"
+            awardStringBottom = "FLIPS ADDED"
+            self.game.increase_tracking('Flip Limit',5)
+
+        # flip count + 10
+        elif self.selectedPrizes[5:] == "Z":
+            awardStringTop = "TEN EXTRA"
+            awardStringBottom = "FLIPS ADDED"
+            self.game.increase_tracking('Flip Limit',10)
+
+        # flip count + 15
+        elif self.selectedPrizes[5:] == "a":
+            awardStringTop = "FIFTEEN EXTRA"
+            awardStringBottom = "FLIPS ADDED"
+            self.game.increase_tracking('Flip Limit',15)
+
         # call the lamp update so the prize is shown properly
         self.lamp_update()
 
@@ -826,7 +871,7 @@ class SkillShot(ep.EP_Mode):
         # cancel the idle timer from interrupter jones
         self.game.interrupter.cancel_idle()
         # turn off the music
-        self.stop_music()
+        self.stop_music(slice=1)
         # turn off the table lights
         self.game.set_tracking('lampStatus',"OFF")
         self.lamp_update()
@@ -879,7 +924,7 @@ class SkillShot(ep.EP_Mode):
         self.wasActive = self.active
         self.active = 0
         # kill the drum roll
-        self.stop_music()
+        self.stop_music(slice=1)
         # turn the lights back on
         self.game.set_tracking('lampStatus',"ON")
         self.lamp_update()

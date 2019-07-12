@@ -18,7 +18,7 @@
 ### Save Poor Polly from getting run over by the train!
 ###
 
-from procgame import dmd
+from procgame import dmd,game
 import ep
 import random
 
@@ -33,6 +33,7 @@ class RiverChase(ep.EP_Mode):
         self.halted = False
         self.won = False
         self.distance_value = int(30.0 / self.shotsToWin)
+        self.valueMultiplier = 1 # shot value multiplier
 
         script = []
         # set up the text layer
@@ -59,6 +60,13 @@ class RiverChase(ep.EP_Mode):
         self.halted = False
         self.won = False
         self.distance_value = int(30.0 / self.shotsToWin)
+        self.totalPoints = 0 # holder for total points for the mode earned
+        self.valueMultiplier = 1 # shot value multiplier
+        self.extendedCount = 0
+        self.gotPaused = False # was the mode paused at any point
+        self.lastPoints = 0
+        self.winMultiplier = 3
+        self.winBonus = 0
 
         # position for the horse
         self.x_pos = 6
@@ -87,7 +95,7 @@ class RiverChase(ep.EP_Mode):
             if self.running:
                 self.game.base.busy = True
                 self.game.base.queued += 1
-                self.polly_died()
+                self.polly_died(drain=True)
 
 
     # bonus lanes pause save polly
@@ -154,6 +162,20 @@ class RiverChase(ep.EP_Mode):
     def sw_rightRampBottom_active(self,sw):
         self.game.sound.play(self.game.assets.sfx_horse)
 
+    # quickdraw switch bits
+    def sw_topLeftStandUp_active(self,sw):
+        self.add_time()
+        return game.SwitchStop
+    def sw_bottomLeftStandUp_active(self,sw):
+        self.add_time()
+        return game.SwitchStop
+    def sw_topRightStandUp_active(self,sw):
+        self.add_time()
+        return game.SwitchStop
+    def sw_bottomRightStandUp_active(self,sw):
+        self.add_time()
+        return game.SwitchStop
+
     def process_shot(self):
         # count the shot
         self.shotsSoFar += 1
@@ -167,11 +189,37 @@ class RiverChase(ep.EP_Mode):
         else:
             # set the banner flag
             self.banner = True
+            self.cancel_delayed("Multiplier")
             # score points
-            self.game.score(self.shotValue)
+            points = self.shotValue * self.valueMultiplier
+            self.game.score(points)
+            #print "SCORING POINTS " + str(points) + " Multiplier " + str(self.valueMultiplier)
+            # add the points to the total
+            self.totalPoints += points
+            # save the last points for the display
+            self.lastPoints = points
+            #print "LAST POINTS VALUE " + str(self.lastPoints)
+            # nudge the multiplier
+            self.raise_multiplier()
+            # increase the shot value .... for the fuck of it
+            self.shotValue += 50000
             # set the distance to move
             #print "MOVING HORSE " + str(self.distance_value)
             self.distance += self.distance_value
+
+    def raise_multiplier(self):
+        # raise the multiplier value by 1
+        self.valueMultiplier += 1
+        #print "RAISING MULTIPLIER OVER HERE - now it's " + str(self.valueMultiplier)
+        # update the lamps
+        self.lamp_update()
+        #print "River chase - UPDATING THE LAMPS"
+        # set the delay to reset the timer
+        self.delay("Multiplier",delay=3,handler=self.reset_multiplier)
+
+    def reset_multiplier(self):
+        self.valueMultiplier = 1
+        self.lamp_update()
 
     def start_river_chase(self,step=1):
         if step == 1:
@@ -185,8 +233,13 @@ class RiverChase(ep.EP_Mode):
             # clear any running music
             #self.stop_music()
             self.lamp_update()
+            ## TEMP PLAY INTRO
+            duration = self.game.base.priority_quote(self.game.assets.quote_rotrDox)
+            ## secondary intro clip
+            self.delay("Operational",delay=duration+0.1,handler=lambda: self.play_ordered_quote(self.game.assets.quote_rotrIntro,'start'))
 
-            # start the music
+
+        # start the music
             self.music_on(self.game.assets.music_altPeril)
             # run the animation
             anim = self.game.assets.dmd_pollyIntro
@@ -203,7 +256,6 @@ class RiverChase(ep.EP_Mode):
             self.transition = ep.EP_Transition(self,self.layer,titleCard,ep.EP_Transition.TYPE_WIPE,ep.EP_Transition.PARAM_EAST)
             # delay the start process
             self.delay("Get Going",delay=2,handler=self.in_progress)
-            self.delay("Operational",delay=2,handler=lambda: self.play_ordered_quote(self.game.assets.quote_rotrIntro,'start'))
 
     ## this is the main mode loop - not passing the time to the loop because it's global
     ## due to going in and out of pause
@@ -254,15 +306,51 @@ class RiverChase(ep.EP_Mode):
         self.cancel_delayed("Get Going")
         # set the flag
         self.halted = True
+        # flag the penalty for using pause
+        self.gotPaused = True
         self.layer = self.pauseView
 
+    def add_time(self):
+        # add to the time if we haven't hit the max
+        if self.extendedCount < 4:
+            # increase the timer by 4 seconds
+            self.modeTimer += 4
+            # play a sound
+            self.game.sound.play(self.game.assets.sfx_quickdrawOff)
+            # score some points
+            self.game.score(3750)
+            # increment the extendedCount
+            self.extendedCount += 1
+        else:
+            # play a thunk
+            self.game.sound.play(self.game.assets.sfx_quickdrawOn)
+            # score some points
+            self.game.score(3750)
 
     # success
     def polly_saved(self):
         # audit
         self.game.game_data['Feature']['Left Polly Won'] += 1
         self.game.peril = False
-        self.game.score(500000)
+        #self.game.score(500000)
+        # score the shot value x the current multiplier
+        points = self.shotValue * self.valueMultiplier
+        # add the points to the total
+        self.totalPoints += points
+        # score the 3rd hit points
+        self.game.score(points)
+        # immediately calculate and score the win bonus - in case the end stuff gets interrupted
+        # if the timer was paused at all, remove one multiplier
+        if self.gotPaused:
+            self.winMultiplier -= 1
+            # if extra time was added, remove one multiplier
+        if self.extendedCount > 0:
+            self.winMultiplier -=1
+            # mode bonus is total points x remaining multiplier
+        self.winBonus = self.totalPoints * self.winMultiplier
+        # score those points, pronto
+        self.game.score(self.winBonus)
+
         # set the left ramp value up
         self.game.set_tracking('leftRampValue',20000)
         self.running = False
@@ -276,17 +364,27 @@ class RiverChase(ep.EP_Mode):
         self.win_display()
 
     # fail
-    def polly_died(self):
+    def polly_died(self, drain=False):
         self.game.peril = False
         self.running = False
         self.wipe_delays()
         backdrop = dmd.FrameLayer(opaque=True, frame=self.game.assets.dmd_poutySheriff.frames[0])
-        textLine1 = ep.EP_TextLayer(25,8,self.game.assets.font_12px_az,justify="center",opaque=False).set_text("TOO",color=ep.RED)
-        textLine2 = ep.EP_TextLayer(98,8,self.game.assets.font_12px_az,justify="center",opaque=False).set_text("LATE!",color=ep.RED)
-        combined = dmd.GroupedLayer(128,32,[backdrop,textLine1,textLine2])
+        textLine1 = ep.EP_TextLayer(25, 8, self.game.assets.font_12px_az, justify="center", opaque=False)
+        if drain:
+            string = "OH"
+        else:
+            string = "TOO"
+        textLine1.set_text(string, color=ep.RED)
+        textLine2 = ep.EP_TextLayer(98, 8, self.game.assets.font_12px_az, justify="center", opaque=False)
+        if drain:
+            string = "NO!"
+        else:
+            string = "LATE!"
+        textLine2.set_text(string, color=ep.RED)
+        combined = dmd.GroupedLayer(128, 32, [backdrop, textLine1, textLine2])
         self.layer = combined
         self.game.sound.play(self.game.assets.sfx_glumRiff)
-        self.delay("Operational",delay=1.5,handler=self.end_river_chase)
+        self.delay("Operational", delay=1.5, handler=self.end_river_chase)
 
     def win_display(self,step=1):
         if step == 1:
@@ -320,8 +418,9 @@ class RiverChase(ep.EP_Mode):
             self.delay("Win Display",delay=myWait,handler=self.win_display,param=4)
         if step == 4:
             # saved banner goes here
-            awardTextString = "POLLY SAVED"
-            awardScoreString = str(ep.format_score(500000))
+            awardTextString = "POLLY SAVED BONUS"
+            # set the display string with commas
+            awardScoreString = str(ep.format_score(self.winBonus))
             # combine them
             completeFrame = self.build_display(awardTextString,awardScoreString)
             stackLevel = self.game.show_tracking('stackLevel')
@@ -339,6 +438,7 @@ class RiverChase(ep.EP_Mode):
     def build_display(self,awardTextString,awardScoreString):
     # create the two text lines
         #print "BUILDING DISPLAY"
+        #print "Award Text/ScoreString " + str(awardTextString) + "/" + str(awardScoreString)
         awardTextTop = ep.EP_TextLayer(128/2,5,self.game.assets.font_5px_bold_AZ,justify="center",opaque=False)
         awardTextBottom = ep.EP_TextLayer(128/2,11,self.game.assets.font_15px_az,justify="center",opaque=False)
         # if blink frames we have to set them
@@ -355,7 +455,7 @@ class RiverChase(ep.EP_Mode):
         # cancel the mode timer during the display
         self.cancel_delayed("Mode Timer")
         shotsLeftText = str(self.shotsToWin - self.shotsSoFar) + " MORE TO GO"
-        display = self.build_display(shotsLeftText,str(ep.format_score(100000)))
+        display = self.build_display(shotsLeftText,str(ep.format_score(self.lastPoints)))
         transition = ep.EP_Transition(self,self.layer,display,ep.EP_Transition.TYPE_CROSSFADE)
         self.delay("Display",delay=1.5,handler=self.in_progress)
 

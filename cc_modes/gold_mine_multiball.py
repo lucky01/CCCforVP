@@ -53,6 +53,9 @@ class GoldMine(ep.EP_Mode):
         self.jackpots = 0
         self.moo = False
         self.halted = False
+        # stop any running quickdraw immediately
+        if self.game.quickdraw.running:
+            self.game.quickdraw.lost(self.game.quickdraw.target)
         # reset the jackpots to false to prevent lights until the mode really starts
         for i in range(0,5,1):
             self.game.set_tracking('jackpotStatus',False,i)
@@ -133,12 +136,12 @@ class GoldMine(ep.EP_Mode):
             self.halt()
 
     # mine for restart pause
-    def sw_minePopper_active_for_250ms(self,sw):
+    def sw_minePopper_active_for_150ms(self,sw):
         if not self.halted and self.restartFlag:
             self.halt()
 
     # saloon popper for restart pause
-    def sw_saloonPopper_active_for_250ms(self,sw):
+    def sw_saloonPopper_active_for_150ms(self,sw):
         if not self.halted and self.restartFlag:
             self.halt()
 
@@ -719,31 +722,31 @@ class GoldMine(ep.EP_Mode):
                 self.game.sound.play_music(self.game.assets.music_tensePiano2,loops=-1)
             #print "RESTART DISPLAY"
             backdrop = dmd.FrameLayer(opaque=True, frame=self.game.assets.dmd_mineEntranceBorder.frames[0])
-            awardTextTop = dmd.TextLayer(128/2,5,self.game.assets.font_5px_bold_AZ,justify="center",opaque=False)
-            awardTextBottom = dmd.TextLayer(128/2,11,self.game.assets.font_5px_AZ,justify="center",opaque=False)
-            timeText = dmd.TextLayer(64,17,self.game.assets.font_9px_az,justify="center",opaque=False)
+            awardTextTop = ep.EP_TextLayer(128/2,5,self.game.assets.font_5px_bold_AZ,justify="center",opaque=False)
+            awardTextBottom = ep.EP_TextLayer(128/2,11,self.game.assets.font_5px_AZ,justify="center",opaque=False)
+            timeText = ep.EP_TextLayer(64,17,self.game.assets.font_9px_az,justify="center",opaque=False)
             timeText.composite_op = "blacksrc"
-            awardTextTop.set_text("SHOOT THE MINE")
-            awardTextBottom.set_text("TO RESTART MULTIBALL")
+            awardTextTop.set_text("SHOOT THE MINE",color=ep.GREEN)
+            awardTextBottom.set_text("TO RESTART MULTIBALL",color=ep.YELLOW)
             if self.restartTimer == 1:
                 textLine = "1 SECOND"
             else:
                 textLine = str(self.restartTimer) + " SECONDS"
-            timeText.set_text(textLine,blink_frames=4)
+            timeText.set_text(textLine,blink_frames=4,color=ep.RED)
             combined = dmd.GroupedLayer(128,32,[backdrop,awardTextTop,awardTextBottom,timeText])
             self.layer = combined
             self.delay(name="Restart Timer",delay=1.0,handler=self.restart_option)
 
     def restart_hold_display(self):
         backdrop = dmd.FrameLayer(opaque=True, frame=self.game.assets.dmd_mineEntranceBorder.frames[0])
-        awardTextTop = dmd.TextLayer(128/2,5,self.game.assets.font_5px_bold_AZ,justify="center",opaque=False)
-        awardTextBottom = dmd.TextLayer(128/2,11,self.game.assets.font_5px_AZ,justify="center",opaque=False)
-        timeText = dmd.TextLayer(64,17,self.game.assets.font_9px_az,justify="center",opaque=False)
+        awardTextTop = ep.EP_TextLayer(128/2,5,self.game.assets.font_5px_bold_AZ,justify="center",opaque=False)
+        awardTextBottom = ep.EP_TextLayer(128/2,11,self.game.assets.font_5px_AZ,justify="center",opaque=False)
+        timeText = ep.EP_TextLayer(64,17,self.game.assets.font_9px_az,justify="center",opaque=False)
         timeText.composite_op = "blacksrc"
-        awardTextTop.set_text("SHOOT THE MINE")
-        awardTextBottom.set_text("TO RESTART MULTIBALL")
+        awardTextTop.set_text("SHOOT THE MINE",color=ep.GREEN)
+        awardTextBottom.set_text("TO RESTART MULTIBALL", color=ep.YELLOW)
         textLine = "PAUSED"
-        timeText.set_text(textLine,blink_frames=4)
+        timeText.set_text(textLine,blink_frames=4,color=ep.MAGENTA)
         combined = dmd.GroupedLayer(128,32,[backdrop,awardTextTop,awardTextBottom,timeText])
         self.layer = combined
 

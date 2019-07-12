@@ -18,7 +18,7 @@
 ### Save Poor Polly from getting run over by the train!
 ###
 
-from procgame import dmd
+from procgame import dmd,game
 import random
 import ep
 
@@ -37,7 +37,7 @@ class BankRobbery(ep.EP_Mode):
         script = []
         # set up the text layer
         textString = "< SAVE POLLY PAUSED >"
-        textLayer = ep.EP_TextLayer(128/2, 24, self.game.assets.font_6px_az_inverse, "center", opaque=False).set_text(textString,color=ep.GREEN)
+        textLayer = ep.EP_TextLayer(128/2, 24, self.game.assets.font_6px_az_inverse, "center", opaque=False).set_text(textString,color=ep.PURPLE)
         script.append({'seconds':0.3,'layer':textLayer})
         # set up the alternating blank layer
         blank = dmd.FrameLayer(opaque=False, frame=self.game.assets.dmd_blank.frames[0])
@@ -49,6 +49,7 @@ class BankRobbery(ep.EP_Mode):
         self.keys_index = {'start':list(range(len(self.game.sound.sounds[self.game.assets.quote_hatbIntro])))}
         self.counts_index = {'start':0}
         random.shuffle(self.keys_index['start'])
+        self.valueMultiplier = 1 # shot value multiplier
 
 
     def mode_started(self):
@@ -70,6 +71,13 @@ class BankRobbery(ep.EP_Mode):
         self.shooting = False
         self.shooter = 0
         self.shotWait = 0
+        self.totalPoints = 0 # holder for total points for the mode earned
+        self.valueMultiplier = 1 # shot value multiplier
+        self.extendedCount = 0
+        self.gotPaused = False # was the mode paused at any point
+        self.lastPoints = 0
+        self.winMultiplier = 3
+        self.winBonus = 0
 
         # set up the dude standing layers
         self.dude0 = dmd.FrameLayer(opaque=False, frame=self.game.assets.dmd_bankDude.frames[0])
@@ -108,7 +116,7 @@ class BankRobbery(ep.EP_Mode):
             if self.running:
                 self.game.base.busy = True
                 self.game.base.queued += 1
-                self.polly_died()
+                self.polly_died(drain=True)
 
     # bonus lanes pause save polly
     def sw_leftBonusLane_active(self,sw):
@@ -165,6 +173,24 @@ class BankRobbery(ep.EP_Mode):
         if self.running:
             self.process_shot(2)
 
+    def add_time(self):
+        # add to the time if we haven't hit the max
+        if self.extendedCount < 4:
+            # increase the timer by 4 seconds
+            self.modeTimer =+ 4
+            # play a sound
+            self.game.sound.play(self.game.assets.sfx_quickdrawOff)
+            # score some points
+            self.game.score(3750)
+            # increment the extendedCount
+            self.extendedCount += 1
+        else:
+            # play a thunk
+            self.game.sound.play(self.game.assets.sfx_quickdrawOn)
+            # score some points
+            self.game.score(3750)
+
+
     def process_shot(self,shot):
         if self.have_won:
             #print "It's over already!"
@@ -174,12 +200,24 @@ class BankRobbery(ep.EP_Mode):
 
         if self.isActive[shot]:
             # if we hit an active shot, it's a hit
+            # cancel the multiplier delay
+            self.cancel_delayed("Multiplier")
             # set that shot to inactive
             self.isActive[shot] = False
             # update the lamps
             self.lamp_update()
             # score points
-            self.game.score(self.shotValue)
+            points = self.shotValue * self.valueMultiplier
+            self.game.score(points)
+            #print "POINTS FOR THIS SHOT " + str(points)
+            # add to the total
+            self.totalPoints += points
+            # set the last points for the banner
+            self.lastPoints = points
+            # increase the shot value, because why not
+            self.shotValue += 250000
+            # up the multiplier
+            self.raise_multiplier()
             # kill the guy
             self.kill_dude(shot)
         else:
@@ -187,6 +225,18 @@ class BankRobbery(ep.EP_Mode):
             self.game.sound.play(self.game.assets.sfx_thrownCoins)
             # if we did't hit a shot, restart the mode timer
             self.in_progress()
+
+    def raise_multiplier(self):
+        # raise the multiplier value by 1
+        self.valueMultiplier += 1
+        # update the lamps
+        self.lamp_update()
+        # set the delay to reset the timer
+        self.delay("Multiplier",delay=3,handler=self.reset_multiplier)
+
+    def reset_multiplier(self):
+        self.valueMultiplier = 1
+        self.lamp_update()
 
     def start_bank_robbery(self,step=1):
         if step == 1:
@@ -198,8 +248,13 @@ class BankRobbery(ep.EP_Mode):
             # set the running flag
             self.running = True
             self.lamp_update()
+            ## TEMP PLAY INTRO
+            duration = self.game.base.priority_quote(self.game.assets.quote_hatbDox)
+            # Secondary intro quote
+            self.delay("Operational",delay=duration+0.1,handler=lambda: self.play_ordered_quote(self.game.assets.quote_hatbIntro,'start'))
 
-            # start the music
+
+        # start the music
             self.music_on(self.game.assets.music_altPeril)
             # run the animation
             anim = self.game.assets.dmd_pollyIntro
@@ -218,14 +273,13 @@ class BankRobbery(ep.EP_Mode):
             self.transition = ep.EP_Transition(self,self.layer,titleCard,ep.EP_Transition.TYPE_WIPE,ep.EP_Transition.PARAM_EAST)
             # delay the start process
             self.delay("Get Going",delay=2,handler=self.in_progress)
-            self.delay(delay=2,handler=lambda: self.play_ordered_quote(self.game.assets.quote_hatbIntro,'start'))
 
     ## this is the main mode loop - not passing the time to the loop because it's global
     ## due to going in and out of pause
     def in_progress(self):
         if self.running:
-            ##print "IN PROGRESS " + str(self.modeTimer)
-            ##print "Shooter info: Target - " + str(self.shotTarget) + " Timer - " + str(self.shotTimer)
+            #print "IN PROGRESS " + str(self.modeTimer)
+            #print "Shooter info: Target - " + str(self.shotTarget) + " Timer - " + str(self.shotTimer)
             # and all the text
             p = self.game.current_player()
             scoreString = ep.format_score(p.score)
@@ -324,7 +378,26 @@ class BankRobbery(ep.EP_Mode):
             self.cancel_delayed("Get Going")
             # set the flag
             self.halted = True
+            self.gotPaused = True
             self.layer = self.pauseView
+
+    def add_time(self):
+        # add to the time if we haven't hit the max
+        if self.extendedCount < 4:
+            # increase the timer by 4 seconds
+            self.modeTimer += 4
+            # play a sound
+            self.game.sound.play(self.game.assets.sfx_quickdrawOff)
+            # score some points
+            self.game.score(3750)
+            # increment the extendedCount
+            self.extendedCount += 1
+        else:
+            # play a thunk
+            self.game.sound.play(self.game.assets.sfx_quickdrawOn)
+            # score some points
+            self.game.score(3750)
+
 
 
     # success
@@ -332,7 +405,18 @@ class BankRobbery(ep.EP_Mode):
         # audit
         self.game.game_data['Feature']['Right Polly Won'] += 1
         self.game.peril = False
-        self.game.score(750000)
+#        self.game.score(750000)
+        # if the timer was paused at all, remove one multiplier
+        if self.gotPaused:
+            self.winMultiplier -= 1
+            # if extra time was added, remove one multiplier
+        if self.extendedCount > 0:
+            self.winMultiplier -= 1
+            # mode bonus is total points x remaining multiplier
+        self.winBonus = self.totalPoints * self.winMultiplier
+        # score those points, pronto
+        self.game.score(self.winBonus)
+
         self.cancel_delayed("Mode Timer")
         # kill the lights on the three ramps
         self.game.lamp_control.left_ramp('Base')
@@ -341,17 +425,27 @@ class BankRobbery(ep.EP_Mode):
         self.win_display()
 
     # fail
-    def polly_died(self):
+    def polly_died(self, drain=False):
         self.game.peril = False
         self.cancel_delayed("Mode Timer")
         backdrop = dmd.FrameLayer(opaque=True, frame=self.game.assets.dmd_poutySheriff.frames[0])
-        textLine1 = ep.EP_TextLayer(25,8,self.game.assets.font_12px_az,justify="center",opaque=False).set_text("TOO",color=ep.RED)
-        textLine2 = ep.EP_TextLayer(98,8,self.game.assets.font_12px_az,justify="center",opaque=False).set_text("LATE!",color=ep.RED)
-        combined = dmd.GroupedLayer(128,32,[backdrop,textLine1,textLine2])
+        textLine1 = ep.EP_TextLayer(25, 8, self.game.assets.font_12px_az, justify="center", opaque=False)
+        if drain:
+            string = "OH"
+        else:
+            string = "TOO"
+        textLine1.set_text(string, color=ep.RED)
+        textLine2 = ep.EP_TextLayer(98, 8, self.game.assets.font_12px_az, justify="center", opaque=False)
+        if drain:
+            string = "NO!"
+        else:
+            string = "LATE!"
+        textLine2.set_text(string, color=ep.RED)
+        combined = dmd.GroupedLayer(128, 32, [backdrop, textLine1, textLine2])
         self.layer = combined
         self.game.sound.play(self.game.assets.sfx_glumRiff)
 
-        self.delay("Operational",delay=1.5,handler=self.end_bank_robbery)
+        self.delay("Operational", delay=1.5, handler=self.end_bank_robbery)
 
     def win_display(self,step=1):
         if step == 1:
@@ -384,8 +478,8 @@ class BankRobbery(ep.EP_Mode):
             self.delay("Win Display",delay=myWait,handler=self.win_display,param=4)
         if step == 4:
             # saved banner goes here
-            awardTextString = "POLLY SAVED"
-            awardScoreString = str(ep.format_score(750000))
+            awardTextString = "POLLY SAVED BONUS"
+            awardScoreString = str(ep.format_score(self.winBonus))
             # combine them
             completeFrame = self.build_display(awardTextString,awardScoreString)
             stackLevel = self.game.show_tracking('stackLevel')
@@ -412,7 +506,7 @@ class BankRobbery(ep.EP_Mode):
         # build a text line with that
         awardTextString = str(total) + " MORE TO GO"
         # build the display layer
-        banner = self.build_display(awardTextString,str(ep.format_score(250000)))
+        banner = self.build_display(awardTextString,str(ep.format_score(self.lastPoints)))
         # activate it
         self.layer = banner
         # delay a return to in progress

@@ -489,6 +489,7 @@ class Attract(ep.EP_Mode):
 
     def flip_again(self):
         self.flipperOK = True
+
     def noisy_again(self):
         self.noisy = True
 
@@ -523,6 +524,8 @@ class Attract(ep.EP_Mode):
     # as lost?
 
     def sw_startButton_active(self, sw):
+        # make the flippers stop playing sounds
+        self.noisy = False
         # if both flipper buttons are pressed, power down
         if self.game.switches.flipperLwR.is_active() and self.game.switches.flipperLwL.is_active() and self.game.buttonShutdown:
             sys.exit(69)
