@@ -20,7 +20,7 @@
 # |_|  |_|\__,_|_|_| |_|  \____|\__,_|_| |_| |_|\___|
 
 #import logging
-#logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+#logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
 from procgame import *
 import cc_modes
@@ -58,9 +58,6 @@ class CCGame(game.BasicGame):
         config.values['pinproc_class'] = 'procgame.fakepinproc.FakePinPROC'
         #else:
         #    self.fakePinProc = False
-            # Load up the config file
-        #config = yaml.load(open(yaml_path, 'r'))
-        # set a variable for the machine type
         machineType = 'wpc95'
 
         self.restart = False
@@ -132,7 +129,7 @@ class CCGame(game.BasicGame):
         self.multiplier = 1
 
         # software version number
-        self.revision = "2019.06.29"
+        self.revision = "2019.07.14"
 
         # basic game reset stuff, copied in
         # load up the game data Game data
