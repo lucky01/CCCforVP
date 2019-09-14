@@ -48,9 +48,8 @@ settings_defaults_path = curr_file_path + "/config/settings_template.yaml"
 user_settings_path = curr_file_path + "/config/user_settings.yaml"
 dots_path = curr_file_path + "/dots/"
 images_path = curr_file_path + "/images/"
-yaml_path = curr_file_path + "/config/cc_machine.yaml"
 
-## Subclass BasicGame to create the main game
+# Subclass BasicGame to create the main game
 class CCGame(game.BasicGame):
     def __init__(self):
 
@@ -129,7 +128,7 @@ class CCGame(game.BasicGame):
         self.multiplier = 1
 
         # software version number
-        self.revision = "2019.07.14"
+        self.revision = "2019.09.07"
 
         # basic game reset stuff, copied in
         # load up the game data Game data
@@ -186,6 +185,9 @@ class CCGame(game.BasicGame):
         # check for the knocker setting
         if self.user_settings['Machine (Standard)']['Real Knocker Installed'] == "Yes":
             self.useKnocker = True
+            # exception for drop targets because of conflict
+            if self.user_settings['Machine (Standard)']['Drop Target Type'] == "Smart":
+                self.useKnocker = False
         # check the replay settings
         self.replays = self.user_settings['Machine (Standard)']['Replays'] == "Enabled"
         # number of tilt warnings - set one higher due to how used
@@ -1151,6 +1153,7 @@ class CCGame(game.BasicGame):
         """Enables or disables the flippers AND bumpers."""
         if self.party_setting == "Drunk":
             self.enable_inverted_flippers(enable)
+            self.coils.solGameOn.disable()
         else:
             # Set a flippers active flag
             self.flippers_active = True
@@ -1163,6 +1166,7 @@ class CCGame(game.BasicGame):
 
                 drivers = []
                 if enable:
+                    self.coils.solGameOn.enable()
                     if self.party_setting == "Newbie":
                         # if we're on newbie, turn all the flippers on per button
                         for flipper in self.config['PRFlippers']:
@@ -1197,6 +1201,7 @@ class CCGame(game.BasicGame):
                 self.proc.switch_update_rule(switch_num, state2, {'notifyHost':False, 'reloadActive':False}, drivers, len(drivers) > 0)
 
                 if not enable:
+                    self.coils.solGameOn.disable() 
                     self.flippers_active = False
                     main_coil.disable()
                     hold_coil.disable()
@@ -1328,7 +1333,7 @@ class CCGame(game.BasicGame):
                 self.current_music = song
             # if not, just re-activate the current
             else:
-                # print str(caller) + " restarting current song"
+                #print str(caller) + " restarting current song"
                 # then start it up
                 pass
             self.sound.play_music(self.current_music, loops=-1)

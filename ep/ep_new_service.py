@@ -53,6 +53,7 @@ class NewServiceSkeleton(ep.EP_Mode):
         self.up_looping = False
 
     def sw_down_active(self, sw):
+        #print "OMG ITEM DOWN"
         if not self.busy:
             self.item_down()
         else:
@@ -60,6 +61,7 @@ class NewServiceSkeleton(ep.EP_Mode):
         return game.SwitchStop
 
     def sw_down_inactive(self, sw):
+        #print "OMG DOWN INACTIVE"
         self.cancel_delayed("Item Down")
         self.down_looping = False
 
@@ -71,55 +73,53 @@ class NewServiceSkeleton(ep.EP_Mode):
         return game.SwitchStop
 
     def item_down(self):
+        # loop around if the switch is still down
+        self.cancel_delayed("Item Down")
+        # play the sound for moving down
+        self.game.sound.play(self.game.assets.sfx_menuDown)
+        self.index -= 1
+        # if we get below zero, loop around
+        if self.index < 0:
+            self.index = (len(self.section) - 1)
+        if self.callback:
+            self.callback()
+        else:
+            # then update the display
+            self.selectionLine.set_text(str(self.section[self.index]))
+        # make sure the switch is still down
         if self.game.switches.down.is_active():
-            # play the sound for moving down
-            self.game.sound.play(self.game.assets.sfx_menuDown)
-            self.index -= 1
-            # if we get below zero, loop around
-            if self.index < 0:
-                self.index = (len(self.section) - 1)
-            if self.callback:
-                self.callback()
+            # first loop back takes longer
+            if self.down_looping:
+                d_time = 0.1
             else:
-                # then update the display
-                self.selectionLine.set_text(str(self.section[self.index]))
-            # loop around if the switch is still down
-            self.cancel_delayed("Item Down")
-            # make sure the switch is still down
-            if self.game.switches.down.is_active():
-                # first loop back takes longer
-                if self.down_looping:
-                    d_time = 0.1
-                else:
-                    d_time = 0.5
-                    self.down_looping = True
-                    # then circle back for more
-                self.delay("Down Loop", delay=d_time, handler=self.item_down)
+                d_time = 0.5
+                self.down_looping = True
+                # then circle back for more
+            self.delay("Item Down", delay=d_time, handler=self.item_down)
 
     def item_up(self):
+        self.cancel_delayed("Item Up")
+        # play the sound for moving up
+        self.game.sound.play(self.game.assets.sfx_menuUp)
+        self.index += 1
+        # if we get too high, go to zero
+        if self.index >= len(self.section):
+            self.index = 0
+        if self.callback:
+            self.callback()
+        else:
+            # then update the display
+            self.selectionLine.set_text(str(self.section[self.index]))
         if self.game.switches.up.is_active():
-            # play the sound for moving up
-            self.game.sound.play(self.game.assets.sfx_menuUp)
-            self.index += 1
-            # if we get too high, go to zero
-            if self.index >= len(self.section):
-                self.index = 0
-            if self.callback:
-                self.callback()
+            # first loop back takes longer
+            if self.up_looping:
+                d_time = 0.1
             else:
-                # then update the display
-                self.selectionLine.set_text(str(self.section[self.index]))
-            self.cancel_delayed("Item Up")
-            if self.game.switches.up.is_active():
-                # first loop back takes longer
-                if self.up_looping:
-                    d_time = 0.1
-                else:
-                    d_time = 0.5
-                    self.up_looping = True
+                d_time = 0.5
+                self.up_looping = True
 
-                # then circle back for more
-                self.delay("Up Loop", delay=d_time, handler=self.item_up)
+            # then circle back for more
+            self.delay("Item Up", delay=d_time, handler=self.item_up)
 
     # standard display structure
     def update_display(self, titleString, selectionString, infoString="", blinkInfo = False):
@@ -235,20 +235,20 @@ class NewServiceMode(NewServiceSkeleton):
                 pass
         return game.SwitchStop
 
-    def sw_up_active(self,sw):
+    def sw_up_active(self, sw):
         if self.activeMode == "MENU":
             if not self.busy:
-            # play the sound for moving down
+                # play the sound for moving down
                 self.game.sound.play(self.game.assets.sfx_menuUp)
                 self.item_up()
         else:
             pass
         return game.SwitchStop
 
-    def sw_down_active(self,sw):
+    def sw_down_active(self, sw):
         if self.activeMode == "MENU":
             if not self.busy:
-            # play the sound for moving down
+                # play the sound for moving down
                 self.game.sound.play(self.game.assets.sfx_menuDown)
                 self.item_down()
         else:
@@ -654,6 +654,7 @@ class NewServiceModeAllLamps(NewServiceSkeleton):
 #   ___) | (_) | |  __/ | | | (_) | | (_| |   | |  __/\__ \ |_
 #  |____/ \___/|_|\___|_| |_|\___/|_|\__,_|   |_|\___||___/\__|
 
+
 class NewServiceModeSolenoids(NewServiceSkeleton):
     """Service Mode Tests Section."""
     def __init__(self, game, priority):
@@ -794,25 +795,41 @@ class NewServiceModeDropTargets(NewServiceSkeleton):
         super(NewServiceModeDropTargets, self).__init__(game, priority)
         self.myID = "Service Mode Drop Target Test"
         self.index = 0
-        self.targets = ["LEFT DROP TARGET","LEFT CENTER DROP TARGET","RIGHT CENTER DROP TARGET","RIGHT DROP TARGET"]
+        self.targets = ["LEFT DROP TARGET", "LEFT CENTER DROP TARGET", "RIGHT CENTER DROP TARGET", "RIGHT DROP TARGET"]
         self.coils = [self.game.coils.badGuyC0,
                       self.game.coils.badGuyC1,
                       self.game.coils.badGuyC2,
                       self.game.coils.badGuyC3]
+        #self.knockdown_coils = [self.game.coils.badGuyDown0,
+                                #self.game.coils.badGuyDown1,
+                                #self.game.coils.badGuyDown2,
+                                #self.game.coils.badGuyDown3]
+        self.switches = [self.game.switches.badGuySW0,
+                         self.game.switches.badGuySW1,
+                         self.game.switches.badGuySW2,
+                         self.game.switches.badGuySW3]
+        self.smart_drops = self.game.user_settings['Machine (Standard)']['Drop Target Type'] == 'Smart'
+        self.targetUp = [False, False, False, False]
+        self.on_time = self.game.user_settings['Machine (Standard)']['Drop Target Boost']
 
     def mode_started(self):
         self.update_display()
-        self.targetUp = [False,False,False,False]
+        self.targetUp = [False, False, False, False]
+        for n in range(0, 4, 1):
+            if self.switches[n].is_active:
+                self.targetUp[n] = False
+            else:
+                self.targetUp[n] = True
         self.on_time = self.game.user_settings['Machine (Standard)']['Drop Target Boost']
 
-    def sw_exit_active(self,sw):
+    def sw_exit_active(self, sw):
         if not self.busy:
             self.game.sound.play(self.game.assets.sfx_menuExit)
             self.drop_targets()
             self.unload()
         return game.SwitchStop
 
-    def sw_up_active(self,sw):
+    def sw_up_active(self, sw):
         #print "Targets:"
         #print self.targetUp
         self.index += 1
@@ -823,7 +840,7 @@ class NewServiceModeDropTargets(NewServiceSkeleton):
         self.update_instruction(self.index)
         return game.SwitchStop
 
-    def sw_down_active(self,sw):
+    def sw_down_active(self, sw):
         #print "Targets:"
         #print self.targetUp
         self.index -= 1
@@ -834,12 +851,12 @@ class NewServiceModeDropTargets(NewServiceSkeleton):
         self.update_instruction(self.index)
         return game.SwitchStop
 
-    def sw_enter_active(self,sw):
+    def sw_enter_active(self, sw):
         #print "Enter Pressed"
         #print "Index is: " + str(self.index)
         #print "targetUp is: " + str(self.targetUp[self.index])
         # if the selected target is down
-        if self.targetUp[self.index] == False:
+        if not self.targetUp[self.index]:
             # raise the target
             #print "Raise target " + str(self.index)
             self.target_up(self.index)
@@ -850,70 +867,72 @@ class NewServiceModeDropTargets(NewServiceSkeleton):
             self.target_down(self.index)
         return game.SwitchStop
 
-    def sw_badGuySW0_active(self,sw):
+    def sw_badGuySW0_active(self, sw):
         # far left bad guy target
         if self.targetUp[0]:
             self.update_box(0)
         return game.SwitchStop
 
-    def sw_badGuySW0_inactive_for_180ms(self,sw):
+    def sw_badGuySW0_inactive_for_180ms(self, sw):
         # allowance for running in fakepinproc
         if not self.game.fakePinProc:
             self.target_activate(0)
             self.update_box(0)
         return game.SwitchStop
 
-    def sw_badGuySW1_active(self,sw):
+    def sw_badGuySW1_active(self, sw):
         # center left badguy target
         if self.targetUp[1]:
             self.update_box(1)
         return game.SwitchStop
 
-    def sw_badGuySW1_inactive_for_180ms(self,sw):
+    def sw_badGuySW1_inactive_for_180ms(self, sw):
         # allowance for running in fakepinproc
+        #print "SW1 Inactive - Activate Target 1"
         if not self.game.fakePinProc:
             self.target_activate(1)
             self.update_box(1)
         return game.SwitchStop
 
-    def sw_badGuySW2_active(self,sw):
+    def sw_badGuySW2_active(self, sw):
         # center right bad guy target
         if self.targetUp[2]:
             self.update_box(2)
         return game.SwitchStop
 
-    def sw_badGuySW2_inactive_for_180ms(self,sw):
+    def sw_badGuySW2_inactive_for_180ms(self, sw):
         # allowance for running in fakepinproc
+        #print "SW2 Inactive - Activate Target 2"
         if not self.game.fakePinProc:
             self.target_activate(2)
             self.update_box(2)
         return game.SwitchStop
 
-    def sw_badGuySW3_active(self,sw):
+    def sw_badGuySW3_active(self, sw):
         # far right bad guy target
         if self.targetUp[3]:
             self.update_box(3)
         return game.SwitchStop
 
-    def sw_badGuySW3_inactive_for_180ms(self,sw):
+    def sw_badGuySW3_inactive_for_180ms(self, sw):
         # allowance for running in fakepinproc
         if not self.game.fakePinProc:
             self.target_activate(3)
             self.update_box(3)
         return game.SwitchStop
 
-    def update_box(self,target):
+    def update_box(self, target):
         #print "Updating checkbox " + str(target)
-        boxes = [self.box0,self.box1,self.box2,self.box3]
+        boxes = [self.box0, self.box1, self.box2, self.box3]
         # if the bad guy is down, the box is empty
-        if self.targetUp[target] == False:
+        if not self.targetUp[target]:
             boxes[target].set_text("b")
         else:
             boxes[target].set_text("a")
 
-    def update_instruction(self,target):
+    def update_instruction(self, target):
         #print "Update instruction for target " + str(target) + "Target val: " + str(self.targetUp[target])
-        if self.targetUp[target] == False:
+        if not self.targetUp[target]:
             self.instructionLine.set_text("PRESS ENTER TO RAISE TARGET")
         else:
             self.instructionLine.set_text("PRESS ENTER TO LOWER TARGET")
@@ -929,59 +948,68 @@ class NewServiceModeDropTargets(NewServiceSkeleton):
         layers.append(self.targetLine)
         self.instructionLine = dmd.TextLayer(64,14,self.game.assets.font_5px_AZ,"center").set_text("PRESS ENTER TO RAISE TARGET")
         layers.append(self.instructionLine)
-        label0 = dmd.TextLayer(16,20,self.game.assets.font_5px_AZ,"center").set_text("SW.61")
+        label0 = dmd.TextLayer(16, 20, self.game.assets.font_5px_AZ, "center").set_text("SW.61")
         layers.append(label0)
-        label1 = dmd.TextLayer(48,20,self.game.assets.font_5px_AZ,"center").set_text("SW.62")
+        label1 = dmd.TextLayer(48, 20, self.game.assets.font_5px_AZ, "center").set_text("SW.62")
         layers.append(label1)
-        label2 = dmd.TextLayer(80,20,self.game.assets.font_5px_AZ,"center").set_text("SW.63")
+        label2 = dmd.TextLayer(80, 20, self.game.assets.font_5px_AZ, "center").set_text("SW.63")
         layers.append(label2)
-        label3 = dmd.TextLayer(112,20,self.game.assets.font_5px_AZ,"center").set_text("SW.64")
+        label3 = dmd.TextLayer(112, 20, self.game.assets.font_5px_AZ, "center").set_text("SW.64")
         layers.append(label3)
-        self.box0 = dmd.TextLayer(16,26,self.game.assets.font_5px_AZ,"center").set_text("b")
+        self.box0 = dmd.TextLayer(16, 26, self.game.assets.font_5px_AZ, "center").set_text("b")
         layers.append(self.box0)
-        self.box1 = dmd.TextLayer(48,26,self.game.assets.font_5px_AZ,"center").set_text("b")
+        self.box1 = dmd.TextLayer(48, 26, self.game.assets.font_5px_AZ, "center").set_text("b")
         layers.append(self.box1)
-        self.box2 = dmd.TextLayer(80,26,self.game.assets.font_5px_AZ,"center").set_text("b")
+        self.box2 = dmd.TextLayer(80, 26, self.game.assets.font_5px_AZ, "center").set_text("b")
         layers.append(self.box2)
-        self.box3 = dmd.TextLayer(112,26,self.game.assets.font_5px_AZ,"center").set_text("b")
+        self.box3 = dmd.TextLayer(112, 26, self.game.assets.font_5px_AZ, "center").set_text("b")
         layers.append(self.box3)
-        combined = dmd.GroupedLayer(128,32,layers)
+        combined = dmd.GroupedLayer(128, 32, layers)
         self.layer = combined
 
     # raise target
-    def target_up(self,target):
+    def target_up(self, target):
         #print "TARGET RAISED " + str(target)
-        # new coil raise based on research with on o-scope by jim (jvspin)
-        self.coils[target].patter(on_time=2,off_time=2,original_on_time=self.on_time)
+        if self.smart_drops:
+            self.coils[target].pulse(25)
+        else:
+            # new coil raise based on research with on o-scope by jim (jvspin)
+            self.coils[target].enable()
         # If fakepinproc is true, activate the target right away
         if self.game.fakePinProc:
             self.target_activate(target)
 
     # drop target
-    def target_down(self,target):
+    def target_down(self, target):
         #print "DEACTIVATING TARGET " + str(target)
-        self.coils[target].disable()
+        if self.smart_drops:
+            self.knockdown_coils[target].pulse(25)
+        else:
+            self.coils[target].disable()
         self.targetUp[target] = False
         self.update_box(target)
         self.update_instruction(target)
         #print "Targets:"
         #print self.targetUp
 
-    def target_activate(self,target):
-        if self.targetUp[target] == False:
+    def target_activate(self, target):
+        if not self.targetUp[target]:
             #print "ACTIVATING TARGET " + str(target)
-            self.coils[target].patter(on_time=2,off_time=10)
+            if not self.smart_drops:
+                self.coils[target].enable()
             self.targetUp[target] = True
             if self.game.fakePinProc:
                 self.update_box(target)
                 self.update_instruction(target)
+        else:
+            #print "I THINK TARGET UP " + str(target) + " IS TRUE"
+            pass
         #print "Targets:"
         #print self.targetUp
 
-
     def drop_targets(self):
         # drop all teh targets
-        for i in range(0,4,1):
+        for i in range(0, 4, 1):
             self.target_down(i)
 
 #   __  __ _              _____         _
