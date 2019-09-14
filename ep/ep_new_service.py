@@ -1265,7 +1265,7 @@ class NewServiceModeTrain(NewServiceSkeleton):
             self.inMotion = False
         else:
             if self.mode == 0:
-                coil.patter(on_time=6,off_time=6)
+                coil.enable()
             else:
                 coil.enable()
 

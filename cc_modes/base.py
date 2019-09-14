@@ -501,7 +501,7 @@ class BaseGameMode(ep.EP_Mode):
             elif self.game.tribute_launcher in self.game.modes:
                 # if we hit a return lane when the launcher is running, pop the post
                 #print "Tribute raising post on left"
-                self.game.coils.leftGunFightPost.patter(on_time=2, off_time=6, original_on_time=60)
+                self.game.coils.leftGunFightPost.enable()
             # if there's a running quickdraw or showdown - pass
             elif not self.guns_allowed():
                 pass
