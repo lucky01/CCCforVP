@@ -327,6 +327,30 @@ PRSwitches:
         tags: Standard,8,7
     
 PRCoils:
+    directDrive0:
+        number: 0
+        label: Direct Drive 0
+        pulseTime: 30
+    #badGuyDown0:
+        #number: 1
+        #label: Bad Guy 0 Down
+        #pulseTime: 30
+        #tags: Solenoid
+    #badGuyDown1:
+        #number: 2
+        #label: Bad Guy 1 Down
+        #pulseTime: 30
+        #tags: Solenoid
+    #badGuyDown2:
+        #number: 3
+        #label: Bad Guy 2 Down
+        #pulseTime: 30
+        #tags: Solenoid
+    #badGuyDown3:
+        #number: 4
+        #label: Bad GUy 3 Down
+        #pulseTime: 30
+        #tags: Solenoid
     flipperLwRMain:
         number: FLRM
     flipperLwRHold:
