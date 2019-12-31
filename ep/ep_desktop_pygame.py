@@ -12,6 +12,9 @@ import ctypes
 import itertools
 from procgame.events import EventManager
 import os
+import usb.core
+import usb.util
+import usb.backend.libusb1
 
 
 try:
@@ -60,10 +63,87 @@ class EP_Desktop():
         self.i = 0
         self.HD = False
 
+
+        self.dev = usb.core.find(idVendor=0x0314, idProduct=0xE457)
+
+        if self.dev is None:
+            raise ValueError('Device not found')
+
         self.add_key_map(pygame.locals.K_LSHIFT, 3)
         self.add_key_map(pygame.locals.K_RSHIFT, 1)
 
 
+
+    def Render_RGB24(self, buffer):
+        
+        gamma_table = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1,
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+                 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+                 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5,
+                 5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7,
+                 7, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 10, 10, 10, 10,
+                 11, 11, 11, 11, 11, 12, 12, 12, 12, 13, 13, 13, 13, 13, 14, 14,
+                 14, 14, 15, 15, 15, 16, 16, 16, 16, 17, 17, 17, 18, 18, 18, 18,
+                 19, 19, 19, 20, 20, 20, 21, 21, 21, 22, 22, 22, 23, 23, 23, 24,
+                 24, 24, 25, 25, 25, 26, 26, 27, 27, 27, 28, 28, 29, 29, 29, 30,
+                 30, 31, 31, 31, 32, 32, 33, 33, 34, 34, 35, 35, 35, 36, 36, 37,
+                 37, 38, 38, 39, 39, 40, 40, 41, 41, 42, 42, 43, 43, 44, 44, 45,
+                 45, 46, 47, 47, 48, 48, 49, 49, 50, 50, 51, 52, 52, 53, 53, 54,
+                 55, 55, 56, 56, 57, 58, 58, 59, 60, 60, 61, 62, 62, 63, 63, 63]
+
+        OutputPacketBuffer = [None] * 12292
+
+        OutputPacketBuffer[0] = 0x81
+        OutputPacketBuffer[1] = 0xC3
+        OutputPacketBuffer[2] = 0xE9
+        OutputPacketBuffer[3] = 18
+        pixelR,pixelG,pixelB,pixelRl,pixelGl,pixelBl = 0,0,0,0,0,0
+   
+        for i in range(0,6144,3):
+ 
+        #use these mappings for RGB panels
+            pixelR = buffer[i]
+            pixelG = buffer[i+1]
+            pixelB = buffer[i+2]
+            # lower half of display
+            pixelRl = buffer[6144 + i]
+            pixelGl = buffer[6144 + i + 1]
+            pixelBl = buffer[6144 + i + 2]
+ 
+        #use these mappings for RBG panels
+            #pixelR = buffer[i]
+            #pixelG = buffer[i+2]
+            #pixelB = buffer[i+1]
+            # lower half of display
+            #pixelRl = buffer[6144 + i]
+            #pixelGl = buffer[6144 + i + 2]
+            #pixelBl = buffer[6144 + i + 1]
+
+            #color correction
+            pixelR = gamma_table[pixelR]
+            pixelG = gamma_table[pixelG]
+            pixelB = gamma_table[pixelB]
+
+            pixelRl = gamma_table[pixelRl]
+            pixelGl = gamma_table[pixelGl]
+            pixelBl = gamma_table[pixelBl]
+
+            targetIdx = (i/3)  + 4
+           
+            for j in range(0,6,1):
+                OutputPacketBuffer[targetIdx] = ((pixelGl & 1) << 5) | ((pixelBl & 1) << 4) | ((pixelRl & 1) << 3) | ((pixelG & 1) << 2) | ((pixelB & 1) << 1) | ((pixelR & 1) << 0)
+                pixelR >>= 1
+                pixelG >>= 1
+                pixelB >>= 1
+                pixelRl >>= 1
+                pixelGl >>= 1
+                pixelBl >>= 1
+                targetIdx += 2048    
+
+        self.dev.write(0x01,OutputPacketBuffer,1000)
+                    
     def draw_window(self,pixel,xoffset=0,yoffset=0):
         self.pixel_size = pixel
         if self.pixel_size == 14:
@@ -358,6 +438,8 @@ class EP_Desktop():
         SetWindowPos(pygame.display.get_wm_info()['window'], -1, self.xOffset, self.yOffset, 0, 0, 0x0001)
         pygame.mouse.set_visible(False)
         pygame.display.set_caption('Cactus Canyon Continued')
+	#hide the display from the desktop
+        pygame.display.iconify()
 
     def draw(self, frame):
         """Draw the given :class:`~procgame.dmd.Frame` in the window."""
@@ -366,6 +448,7 @@ class EP_Desktop():
         if not self.HD:
 
             frame_string = frame.get_data()
+            RGB_buffer = []
 
             x = 0
             y = 0
@@ -374,6 +457,7 @@ class EP_Desktop():
 
             for dot in frame_string:
                 dot_value = ord(dot)
+                RGB_value = (0,0,0)
                 image = None
                 # if we got something other than 0
                 if dot_value != 0:
@@ -403,10 +487,16 @@ class EP_Desktop():
                     ##print "Dot Value: " + str(derp) +" - color: " + str(color) + " - Brightness: " +str(brightness)
                     # set the image based on color and brightness
                     ##image = self.colors[color][bright_value]
+ 
                     if self.colors[color][bright_value]:
                         self.screen.blit(self.colors[color][bright_value],((x*self.pixel_size), (y*self.pixel_size)))
+                        RGB_value = self.colors[color][bright_value].get_at((2,2))
+                         
                     del color
                     del bright_value
+
+                RGB_buffer.extend((RGB_value[0],RGB_value[1],RGB_value[2]))
+                del RGB_value
                 del dot
                 del dot_value
 
@@ -421,6 +511,8 @@ class EP_Desktop():
             del x
             del y
             del frame_string
+            self.Render_RGB24(RGB_buffer)
+            del RGB_buffer
 
             pygame.display.update()
 
